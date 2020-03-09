@@ -8,13 +8,13 @@ import './Resources/css/style.css';
 
 function App() {
   return (
-      <BrowserRouter>
-    <main role="main" className="flex-shrink-0">
+    <BrowserRouter>
+      <main role="main" className="flex-shrink-0">
         <Header />
         <HomeRouter />
-    </main>
-        <Footer />
-      </BrowserRouter>
+      </main>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signinForm';
 import { handleSigninChange } from './action';
@@ -7,19 +8,18 @@ import { handleSigninChange } from './action';
 function Signin(props) {
     let errorValue = { email: "", password: "" };
     let formValue = props.signinInfo;
-
     let handleChange = ({ currentTarget: input }) => {
         let signinInfo = {name: input.name,value: input.value};
         props.handleSigninChange(signinInfo);
     };
     const handleSubmit=(element)=>{
          element.preventDefault();
-         console.log("test",props.signinInfo);
     }
     return (
         <div className="row justify-content-center mt-5">
             <div className="col-6">
                 <div className="container custom_form mt-5">
+                    <form>
                     <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
                     <div className="row mx-2">
                         {
@@ -37,6 +37,7 @@ function Signin(props) {
                     <div className="row mx-2 justify-content-center font-weight-bold">
                         <button onClick={handleSubmit} type="button" className="btn btn-primary btn-lg">Sign In</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

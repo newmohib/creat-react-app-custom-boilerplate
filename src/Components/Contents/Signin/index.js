@@ -12,14 +12,22 @@ function Signin(props) {
         let signinInfo = {name: input.name,value: input.value};
         props.handleSigninChange(signinInfo);
     };
+
     const handleSubmit=(element)=>{
          element.preventDefault();
+         let signinSubmitArr=element.target;
+         let signinObj={};
+         for (let i = 0; i < signinSubmitArr.length-1; i++) {
+             const value = signinSubmitArr[i].value;
+             const name = signinSubmitArr[i].name;
+             signinObj[name]=value;
+          }
     }
     return (
         <div className="row justify-content-center mt-5">
             <div className="col-6">
                 <div className="container custom_form mt-5">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                     <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
                     <div className="row mx-2">
                         {
@@ -35,7 +43,7 @@ function Signin(props) {
                         }
                     </div>
                     <div className="row mx-2 justify-content-center font-weight-bold">
-                        <button onClick={handleSubmit} type="button" className="btn btn-primary btn-lg">Sign In</button>
+                        <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
                     </div>
                     </form>
                 </div>

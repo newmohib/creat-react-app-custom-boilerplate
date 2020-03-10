@@ -5,3 +5,8 @@ export const handleSigninChange = (inputObj) => ({
     type: SIGNIN_INPUT,
     payload:inputObj
 });
+
+export const handleSigninSubmit= (inputObj) => ({
+    type: SIGNIN_SUBMIT,
+    payload:inputObj
+});

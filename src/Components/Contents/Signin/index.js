@@ -1,50 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signinForm';
-import { handleSigninChange } from './action';
+import { handleSigninChange, handleSigninSubmit } from './action';
+import { makeSelectSigninInfo } from './reselect';
 
-function Signin(props) {
+ let Signin=(props)=> {
     let errorValue = { email: "", password: "" };
     let formValue = props.signinInfo;
     let handleChange = ({ currentTarget: input }) => {
-        let signinInfo = {name: input.name,value: input.value};
+        let signinInfo = { name: input.name, value: input.value };
         props.handleSigninChange(signinInfo);
     };
 
-    const handleSubmit=(element)=>{
-         element.preventDefault();
-         let signinSubmitArr=element.target;
-         let signinObj={};
-         for (let i = 0; i < signinSubmitArr.length-1; i++) {
-             const value = signinSubmitArr[i].value;
-             const name = signinSubmitArr[i].name;
-             signinObj[name]=value;
-          }
+    const handleSubmit = (element) => {
+        element.preventDefault();
+        let signinSubmitArr = element.target;
+        let signinObj = {};
+        for (let i = 0; i < signinSubmitArr.length - 1; i++) {
+            const value = signinSubmitArr[i].value;
+            const name = signinSubmitArr[i].name;
+            signinObj[name] = value;
+        };
+
+        props.handleSigninSubmit(signinObj);
+        setTimeout(() => {
+            console.log("submit",props.signinInfo().signin);
+        }, 1000)
     }
     return (
         <div className="row justify-content-center mt-5">
             <div className="col-6">
                 <div className="container custom_form mt-5">
                     <form onSubmit={handleSubmit}>
-                    <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
-                    <div className="row mx-2">
-                        {
-                            formFieldName.map((item, itemIndex) => {
-                                return <TextInput
-                                    key={itemIndex}
-                                    {...item}
-                                    value={formValue[item.valueName]}
-                                    error={errorValue[item.errorName]}
-                                    onChange={handleChange}
-                                />
-                            })
-                        }
-                    </div>
-                    <div className="row mx-2 justify-content-center font-weight-bold">
-                        <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
-                    </div>
+                        <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
+                        <div className="row mx-2">
+                            {
+                                formFieldName.map((item, itemIndex) => {
+                                    return <TextInput
+                                        key={itemIndex}
+                                        {...item}
+                                        value={formValue[item.valueName]}
+                                        error={errorValue[item.errorName]}
+                                        onChange={handleChange}
+                                    />
+                                })
+                            }
+                        </div>
+                        <div className="row mx-2 justify-content-center font-weight-bold">
+                            <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -52,11 +58,12 @@ function Signin(props) {
     );
 }
 const mapStateToProps = state => ({
-    signinInfo: state.signin,
+    signinInfo: makeSelectSigninInfo(),
 })
 
 const mapDispatchToProps = dispatch => ({
-    handleSigninChange: (value) => dispatch(handleSigninChange(value))
+    handleSigninChange: (value) => dispatch(handleSigninChange(value)),
+    handleSigninSubmit: (value) => dispatch(handleSigninSubmit(value))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);

@@ -33,7 +33,7 @@ import { handleSigninChange, handleSigninSubmit } from './action';
         //     <div className="col-6">
         //         <div className="container custom_form mt-5">
                     <form onSubmit={handleSubmit}>
-                        <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
+                        <div className="row mx-2 justify-content-center font-weight-bold h3">Sign Up</div>
                         <div className="row mx-2">
                             {
                                 formFieldName.map((item, itemIndex) => {
@@ -48,7 +48,7 @@ import { handleSigninChange, handleSigninSubmit } from './action';
                             }
                         </div>
                         <div className="row mx-2 justify-content-center font-weight-bold">
-                            <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                            <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
                         </div>
                     </form>
         //         </div>

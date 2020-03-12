@@ -7,7 +7,7 @@ function HomeRoute() {
     return (
             <div className="container">
         <Switch>
-            <Route path="/authe"  render={() => <SignInSignUp />}></Route>
+            <Route path="/"  render={() => <SignInSignUp />}></Route>
             <Route render={() => <div>Not Found</div>}></Route>
         </Switch>
             </div>

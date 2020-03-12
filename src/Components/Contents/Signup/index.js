@@ -48,7 +48,7 @@ import { handleSigninChange, handleSigninSubmit } from './action';
                             }
                         </div>
                         <div className="row mx-2 justify-content-center font-weight-bold">
-                            <button type="submit" className="btn btn-primary btn-lg">Sign In</button>
+                            <button type="submit" className="btn btn-primary btn-lg">Submit</button>
                         </div>
                     </form>
         //         </div>

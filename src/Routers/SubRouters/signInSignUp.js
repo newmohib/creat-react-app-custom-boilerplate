@@ -1,12 +1,16 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import {
     Signin,
     Signup
 } from '../../Components/Contents';
 
 function SignInSignUp(props) {
-    console.log("props signin sigup",props);
+    let historyObj=useHistory();
+    let routChange=(value)=>{
+
+historyObj.push(value)
+    }
     return (
         <div className="row justify-content-center mt-5">
             <div className="col-6">
@@ -14,18 +18,16 @@ function SignInSignUp(props) {
                     <div className="row">
                         <div className="col-12">
                             <div className="container m-0">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-secondary">Left</button>
-                                    <button type="button" class="btn btn-secondary">Middle</button>
-                                    <button type="button" class="btn btn-secondary">Right</button>
+                                <div className="row m-2">
+                                    <div className="col-12 ">
+                                        <div class="btn-group btn-block btn-group-lg mx-auto" role="group" aria-label="Basic example">
+                                            <button onClick={()=> routChange("/")} type="button" class="btn btn-primary ">Sign In</button>
+                                            <button onClick={()=> routChange("/authe/signup")} type="button" class="btn btn-primary ">Sign Up</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                
-
-                                <Route path="/authe/signin" exact  render={() => <Signin />}></Route>
-                                <Route path="/authe/signup" exact  render={() => <Signup />}></Route>
-                                
-                                
+                                <Route path="/" exact render={() => <Signin />}></Route>
+                                <Route path="/authe/signup" exact render={() => <Signup />}></Route>
                             </div>
                         </div>
                     </div>

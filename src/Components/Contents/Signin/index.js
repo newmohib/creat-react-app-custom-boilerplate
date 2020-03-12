@@ -28,6 +28,7 @@ import { handleSigninChange, handleSigninSubmit } from './action';
             console.log("submit",props.signinInfo().signin);
         }, 1000)
     }
+    console.log("env",process.env.REACT_APP_NOT_SECRET_CODE);
     return (
         // <div className="row justify-content-center mt-5">
         //     <div className="col-6">

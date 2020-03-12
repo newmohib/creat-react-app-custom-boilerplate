@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signinForm';
 import { handleSigninChange, handleSigninSubmit } from './action';
-import { makeSelectSigninInfo } from './reselect';
 
  let Signin=(props)=> {
     let errorValue = { email: "", password: "" };
@@ -58,7 +57,7 @@ import { makeSelectSigninInfo } from './reselect';
     );
 }
 const mapStateToProps = state => ({
-    signinInfo: makeSelectSigninInfo(),
+    signinInfo: state.signin,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaSignOutAlt } from "react-icons/fa";
 
 function Header() {
   return (
@@ -15,11 +16,9 @@ function Header() {
                     <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Link</a>
+                    <a className="nav-link" href="#"><FaSignOutAlt/></a>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
-                </li>
+                
             </ul>
         </div>
     </nav>

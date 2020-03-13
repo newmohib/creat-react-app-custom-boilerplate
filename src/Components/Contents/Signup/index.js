@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signinForm';
 import { handleSigninChange, handleSigninSubmit } from './action';

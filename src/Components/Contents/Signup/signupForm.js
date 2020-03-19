@@ -27,6 +27,20 @@ let formFieldName =
             errorName:"password",
             errorClass:"",
             valueName:"password"
+        },
+        {
+            divClass: "form-group col-md-12",
+            labelClass: "",
+            labelFor: "confPassword",
+            labelText: "Confirm Password",
+            placeholder: "",
+            inputClass: "form-control",
+            inputId: "confPassword",
+            inputType: "password",
+            inputName:"confPassword",
+            errorName:"confPassword",
+            errorClass:"",
+            valueName:"confPassword"
         }
     ];
 

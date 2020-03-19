@@ -1,12 +1,12 @@
-import { GET_USERS, SIGNIN_INPUT, SIGNIN_SUBMIT } from './constant';
+import {  SIGNUP_INPUT, SIGNUP_SUBMIT } from './constant';
 
 
-export const handleSigninChange = (inputObj) => ({
-    type: SIGNIN_INPUT,
+export const handleSignupChange = (inputObj) => ({
+    type: SIGNUP_INPUT,
     payload:inputObj
 });
 
-export const handleSigninSubmit= (inputObj) => ({
-    type: SIGNIN_SUBMIT,
+export const handleSignupSubmit= (inputObj) => ({
+    type: SIGNUP_SUBMIT,
     payload:inputObj
 });

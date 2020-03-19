@@ -9,7 +9,9 @@ let Signin = (props) => {
     let errorValue = { email: "", password: "" };
     let formValue = props.signinInfo;
     let handleChange = ({ currentTarget: input }) => {
-        let signinInfo = { name: input.name, value: input.value };
+        let formValue = props.signinInfo;
+
+        let signinInfo = { ...formValue, [input.name]: input.value };
         props.handleSigninChange(signinInfo);
     };
 
@@ -17,16 +19,12 @@ let Signin = (props) => {
         element.preventDefault();
         let signinSubmitArr = element.target;
         let signinObj = {};
-        for (let i = 0; i < signinSubmitArr.length - 1; i++) {
+        for (let i = 0; i < signinSubmitArr.length; i++) {
             const value = signinSubmitArr[i].value;
             const name = signinSubmitArr[i].name;
-            signinObj[name] = value;
+            if (name !== "") { signinObj[name] = value; }
         };
-
         props.handleSigninSubmit(signinObj);
-        setTimeout(() => {
-            console.log("submit", props.signinInfo().signin);
-        }, 1000)
     }
     let historyObj = useHistory();
     let routChange = (value) => {
@@ -53,12 +51,12 @@ let Signin = (props) => {
                 }
             </div>
             <div className="row mx-2 ">
-                <div class="col-auto mr-auto float-left">
+                <div className="col-auto mr-auto float-left">
                     <div>
                         <button onClick={() => routChange("/authe/signup")} className="btn btn-light "><span className="">Forgot Password</span></button>
                     </div>
                 </div>
-                <div class="col-auto float-right">
+                <div className="col-auto float-right">
                     <button type="submit" className="btn btn-primary btn-lg ">Submit</button>
                 </div>
             </div>

@@ -5,16 +5,15 @@ let initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    const newState = { ...state };
+    const newState = { ...state.signin };
     console.log("reducer Signin Information", action.payload);
 
     switch (action.type) {
         case SIGNIN_INPUT:
-            return newState[action.payload.name] = action.payload.value;
+            return  action.payload;
             break;
         case SIGNIN_SUBMIT:
-            newState.email = action.payload.email;
-            return newState.password = action.payload.password;
+            return  action.payload;
             break;
     }
     return newState;

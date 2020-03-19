@@ -1,3 +1,2 @@
-export const GET_USERS = 'src/Signin/GET_USERS';
-export const SIGNIN_INPUT = 'src/Signin/SIGNIN_INPUT';
-export const SIGNIN_SUBMIT = 'src/Signin/SIGNIN_SUBMIT';
+export const SIGNUP_INPUT = 'src/Signup/SIGNUP_INPUT';
+export const SIGNUP_SUBMIT = 'src/Signup/SIGNUP_SUBMIT';

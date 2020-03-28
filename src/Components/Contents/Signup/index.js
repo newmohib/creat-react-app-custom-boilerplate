@@ -3,30 +3,20 @@ import { connect } from 'react-redux';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
+import { handleChangeInput,handleSubmitSignin } from './service';
 
 let Signup = (props) => {
     let errorValue = { email: "", password: "", confPassword: "" };
+
     let formValue = props.signUpInfo;
-    
     let handleChange = ({ currentTarget: input }) => {
-
-        formValue = props.signUpInfo;
-        console.log("input", formValue);
-        let signUpInfo = { ...formValue, [input.name]: input.value };
-        props.handleSignupChange(signUpInfo);
-
+        formValue =  handleChangeInput(input,props);
     };
 
     const handleSubmit = (element) => {
         element.preventDefault();
         let signinSubmitArr = element.target;
-        let signinObj = {};
-        for (let i = 0; i < signinSubmitArr.length; i++) {
-            const value = signinSubmitArr[i].value;
-            const name = signinSubmitArr[i].name;
-            if (name !== "") { signinObj[name] = value; }
-        };
-        props.handleSignupSubmit(signinObj);
+        handleSubmitSignin(signinSubmitArr,props);   
     }
     return (
         // <div className="row justify-content-center mt-5">

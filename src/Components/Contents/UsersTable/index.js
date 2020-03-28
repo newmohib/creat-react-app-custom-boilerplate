@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
 let Users = (props) => {
+    let [isDesplay,setIsDesplay]=useState(false)
+   let viewDetails=()=>{
+    setIsDesplay(true);
+    }
     return (
         <div className="m-2">
             <table className="table table-hover table-bordered">
@@ -21,8 +25,9 @@ let Users = (props) => {
                         <td>Mark</td>
                         <td>Otto</td>
                         <td>Otto</td>
-                        <td><button type="button" class="btn btn-primary">Primary</button></td>
+                        <td><button onClick={()=>viewDetails()} type="button" class="btn btn-primary">Primary</button></td>
                     </tr>
+                    {isDesplay && <tr><td colspan="5">Details</td></tr>}
                     <tr>
                         <th scope="row">2</th>
                         <td>Jacob</td>

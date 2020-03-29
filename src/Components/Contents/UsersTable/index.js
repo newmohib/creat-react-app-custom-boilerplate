@@ -1,18 +1,21 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
 let Users = (props) => {
-    let [isDesplay,setIsDesplay]=useState(false)
-   let viewDetails=()=>{
-    setIsDesplay(true);
+    let [isDesplay, setIsDesplay] = useState(false)
+    let viewDetails = () => {
+        setIsDesplay(true);
     }
+    let testData = [{ name: "Mohib", id: 1 }, { name: "Mohibur ", id: 2 }, { name: "Rahman", id: 3 },];
+
+
     return (
         <div className="m-2">
-            <table className="table table-hover table-bordered">
+            <table className="table table-hover table-bordered text-center">
                 <thead>
-                    <tr className="" >
-                        <th scope="col" >ID</th>
+                    <tr >
+                        <th scope="col">ID</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
@@ -20,38 +23,33 @@ let Users = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Otto</td>
-                        <td><button onClick={()=>viewDetails()} type="button" class="btn btn-primary">Primary</button></td>
-                    </tr>
-                    {isDesplay && <tr><td colspan="5">Details</td></tr>}
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td><button type="button" class="btn btn-primary">Primary</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td >Larry the Bird</td>
-                        <td >Larry </td>
-                        <td>twitter</td>
-                        <td><button type="button" class="btn btn-primary">Primary</button></td>
-                    </tr>
+                    {
+                        testData.map((item, index) => {
+                            console.log(item, index);
+                           return( <tr>
+                                <th scope="row">{item.id}</th>
+                                <td>{item.name}</td>
+                                <td>{item.name}</td>
+                                <td>{item.name}</td>
+                                <td><button onClick={() => viewDetails()} type="button" className="btn btn-primary">Primary</button></td>
+                               
+                            </tr>
+                            
+                            )
+                        })  
+                    }
+                    {/* {isDesplay && <tr><td colspan="5">Details</td></tr>} */}
+
                 </tbody>
             </table>
 
             <nav aria-label="Page navigation example ">
-                <ul class="pagination justify-content-end ">
-                    <li class="page-item disabled" ><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <ul className="pagination justify-content-end ">
+                    <li className="page-item disabled" ><a className="page-link" href="#">Previous</a></li>
+                    <li className="page-item"><a className="page-link" href="#">1</a></li>
+                    <li className="page-item"><a className="page-link" href="#">2</a></li>
+                    <li className="page-item"><a className="page-link" href="#">3</a></li>
+                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
         </div>

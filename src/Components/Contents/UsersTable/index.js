@@ -3,48 +3,113 @@ import { connect } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
 let Users = (props) => {
-    let [isDesplay, setIsDesplay] = useState(false)
-    let viewDetails = () => {
-        setIsDesplay(true);
-    }
-    let testData = [{ name: "Mohib", id: 1 }, { name: "Mohibur ", id: 2 }, { name: "Rahman", id: 3 },];
-
+    let [isDesplay, setIsDesplay] = useState(null);
+    let viewDetails = (index) => {
+        if (isDesplay === index) {
+            setIsDesplay(null);
+        } else {
+            setIsDesplay(index);
+        }
+    };
+    let testData = [{id: 1 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" }, {id: 2, firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" }, {id: 3 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },{id: 4 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },{id: 5 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },];
 
     return (
         <div className="m-2">
-            <table className="table table-hover table-bordered text-center">
-                <thead>
-                    <tr >
-                        <th scope="col">ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        testData.map((item, index) => {
-                            console.log(item, index);
-                           return( <tr>
-                                <th scope="row">{item.id}</th>
-                                <td>{item.name}</td>
-                                <td>{item.name}</td>
-                                <td>{item.name}</td>
-                                <td><button onClick={() => viewDetails()} type="button" className="btn btn-primary">Primary</button></td>
-                               
-                            </tr>
-                            
-                            )
-                        })  
-                    }
-                    {/* {isDesplay && <tr><td colspan="5">Details</td></tr>} */}
-
-                </tbody>
-            </table>
-
-            <nav aria-label="Page navigation example ">
-                <ul className="pagination justify-content-end ">
+            <div className="container-fluid border ">
+                <div className="row text-center font-weight-bold border-bottom">
+                    <div className="col">
+                        <div className="border-right">
+                            <div className=" p-2">
+                                ID
+                        </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="border-right">
+                            <div className=" p-2">
+                                First Name
+                        </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="border-right">
+                            <div className=" p-2">
+                                Last Name
+                        </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="border-right">
+                            <div className=" p-2">
+                                Email
+                        </div>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="">
+                            <div className=" p-2">
+                                Action
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                {
+                    testData.map((item, index) => {
+                        let borderClass = testData.length - 1 !== index ||index===isDesplay ? "border-bottom" : ""
+                        return (
+                            <div >
+                                <div className={`row text-center  ${borderClass}`}>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                {item.id}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                {item.firstName}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                {item.lastName}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                {item.email}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="">
+                                            <div className="p-1">
+                                                <button onClick={() => viewDetails(index)} type="button" className="btn btn-primary btn-sm">More Options</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {
+                                    isDesplay === index && 
+                                    <div className={`row border-bottom`}>
+                                        <div className="col">
+                                            Test
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul className="pagination justify-content-end mt-2">
                     <li className="page-item disabled" ><a className="page-link" href="#">Previous</a></li>
                     <li className="page-item"><a className="page-link" href="#">1</a></li>
                     <li className="page-item"><a className="page-link" href="#">2</a></li>

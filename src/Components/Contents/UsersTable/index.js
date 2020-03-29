@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
+import { Pagination } from '../index'
+
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
+
     let viewDetails = (index) => {
         if (isDesplay === index) {
             setIsDesplay(null);
@@ -11,7 +14,7 @@ let Users = (props) => {
             setIsDesplay(index);
         }
     };
-    let testData = [{id: 1 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" }, {id: 2, firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" }, {id: 3 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },{id: 4 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },{id: 5 , firstName: "Mohib",lastName:"Rahman",email:"mohib@gmail.com" },];
+    let testData = [{ id: 1, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 2, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 3, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 4, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 5, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },];
 
     return (
         <div className="m-2">
@@ -55,9 +58,9 @@ let Users = (props) => {
                 </div>
                 {
                     testData.map((item, index) => {
-                        let borderClass = testData.length - 1 !== index ||index===isDesplay ? "border-bottom" : ""
+                        let borderClass = testData.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
                         return (
-                            <div >
+                            <div key={index} >
                                 <div className={`row text-center  ${borderClass}`}>
                                     <div className="col">
                                         <div className="border-right">
@@ -96,7 +99,7 @@ let Users = (props) => {
                                     </div>
                                 </div>
                                 {
-                                    isDesplay === index && 
+                                    isDesplay === index &&
                                     <div className={`row border-bottom`}>
                                         <div className="col">
                                             Test
@@ -108,15 +111,7 @@ let Users = (props) => {
                     })
                 }
             </div>
-            <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-end mt-2">
-                    <li className="page-item disabled" ><a className="page-link" href="#">Previous</a></li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
+            <Pagination total={testData.length} />
         </div>
     );
 }

@@ -1,19 +1,24 @@
 import React from 'react';
-import { Route, Switch ,useHistory} from 'react-router-dom';
-import SignInSignUp from './SubRouters/signInSignUp';
-import Users from './SubRouters/userSubRouter';
+import { Route, Switch, useHistory,Redirect } from 'react-router-dom';
+import {
+    Signin,
+    Signup,
+    Users
+} from '../Components/Contents';
 
 function HomeRoute() {
-    const history=useHistory();
-    let isLogin=true;
+    const history = useHistory();
+    let isLogin = true;
     return (
-            <div className="container">
-        <Switch>
-            {!isLogin && <Route path="/"   render={() => <SignInSignUp />}></Route>}
-            <Route path="/admin"  render={() => <Users />}></Route>
-            <Route render={() => <div>Not Found</div>}></Route>
-        </Switch>
-            </div>
+        <div className="container">
+            <Switch>
+                <Redirect from='/' to='/authe/signin' exact />
+                <Route path="/authe/signin" exact render={() => <Signin />}></Route>
+                <Route path="/authe/signup" exact render={() => <Signup />}></Route>
+                <Route path="/admin/users" exact render={() => <Users />}></Route>
+                <Route render={() => <div>Not Found</div>}></Route>
+            </Switch>
+        </div>
     );
 }
 

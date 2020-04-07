@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
@@ -6,6 +6,8 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
+    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [], isPrevious: "", isNext: "" });
+    let [data,setData]=useState({dataList:[],fromDataIndex:0,toDataIndex:pageInfo.pageSize});
 
     let viewDetails = (index) => {
         if (isDesplay === index) {
@@ -14,7 +16,49 @@ let Users = (props) => {
             setIsDesplay(index);
         }
     };
-    let testData = [{ id: 1, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 2, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 3, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 4, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 5, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },];
+
+    let getAllData=(fromDataIndex,toDataIndex)=>{
+        let dataList = [{ id: 1, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 2, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, { id: 3, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" }, 
+        { id: 4, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 5, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 6, firstName: "Mohib13", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 7, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 8, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 9, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 10, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 11, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+    ];
+        let newDataList =dataList.slice(fromDataIndex,toDataIndex)
+
+         let responseData={dataList: newDataList,totalCount:dataList.length}
+         return responseData;
+
+    }
+
+
+    useEffect(
+        () => {
+            console.log("test");
+            let  fromDataIndex= data.fromDataIndex;
+            let  toDataIndex= data.toDataIndex;
+            let {totalCount}=getAllData(fromDataIndex,toDataIndex);
+            setPageInfo({...pageInfo,totalCount});
+        },[]
+    );
+
+    useEffect(
+        () => {
+            console.log("test2");
+            let  fromDataIndex= pageInfo.currentPage === 1? data.fromDataIndex : (pageInfo.currentPage * pageInfo.pageSize) - pageInfo.pageSize;
+            let  toDataIndex=pageInfo.currentPage === 1? data.toDataIndex: pageInfo.currentPage * pageInfo.pageSize;
+            console.log(fromDataIndex,toDataIndex);
+            let {dataList,totalCount}=getAllData(fromDataIndex,toDataIndex);
+            console.log(dataList,totalCount);
+            setData({dataList:dataList,fromDataIndex,toDataIndex})
+            setPageInfo({...pageInfo,totalCount});
+        },[pageInfo.currentPage]
+    );
 
     return (
         <div className="row justify-content-center mt-5">
@@ -63,8 +107,8 @@ let Users = (props) => {
                                         </div>
                                     </div>
                                     {
-                                        testData.map((item, index) => {
-                                            let borderClass = testData.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
+                                        data.dataList.map((item, index) => {
+                                            let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
                                             return (
                                                 <div key={index} >
                                                     <div className={`row text-center  ${borderClass}`}>
@@ -117,7 +161,7 @@ let Users = (props) => {
                                         })
                                     }
                                 </div>
-                                <Pagination total={testData.length} />
+                                <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
                             </div>
                         </div>
                     </div>

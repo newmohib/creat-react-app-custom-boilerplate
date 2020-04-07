@@ -6,7 +6,7 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [], isPrevious: "", isNext: "" });
+    let [pageInfo, setPageInfo] = useState({ pageSize: 1, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [2,3,4,5,], isPrevious: "", isNext: "" });
     let [data,setData]=useState({dataList:[],fromDataIndex:0,toDataIndex:pageInfo.pageSize});
 
     let viewDetails = (index) => {
@@ -28,6 +28,20 @@ let Users = (props) => {
         { id: 10, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
         { id: 11, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
         { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 13, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 14, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 15, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 16, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 17, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 18, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 19, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 20, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 21, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 22, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 23, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 24, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 25, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+        { id: 26, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
     ];
         let newDataList =dataList.slice(fromDataIndex,toDataIndex)
 
@@ -39,10 +53,11 @@ let Users = (props) => {
 
     useEffect(
         () => {
-            console.log("test");
             let  fromDataIndex= data.fromDataIndex;
             let  toDataIndex= data.toDataIndex;
             let {totalCount}=getAllData(fromDataIndex,toDataIndex);
+            console.log("test",totalCount);
+
             setPageInfo({...pageInfo,totalCount});
         },[]
     );

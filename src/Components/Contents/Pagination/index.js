@@ -5,41 +5,53 @@ function Pagination(props) {
 
     useEffect(
         () => {
-            let {pageInfo, setPageInfo}=props;
+            let { pageInfo, setPageInfo } = props;
             let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
             let pages = _.range(1, pagesCount + 1);
 
             let paginationList = [...pageInfo.paginationList];
-            
-            if (pagesCount > 2 && pagesCount > pageInfo.currentPage + 2) {
-                paginationList = [pageInfo.currentPage + 1, pageInfo.currentPage + 2, pageInfo.currentPage + 3];
-            } else if (pagesCount <= 3 || pageInfo.currentPage < 2) {
-                paginationList = pagesCount <= 1 ? [1] : pagesCount ===2? [2]:[2,3];
+
+            if (pages.length < paginationList.length) {
+                paginationList = pages.slice(1);
+            } else {
+                console.log("paginationList", pages.length, paginationList.length);
+                let newPaginationList = [];
+                for (let i = 0; i < paginationList.length; i++) {
+                    const element = pages[i] + 1;
+                    console.log("element", element);
+                    newPaginationList.push(element);
+                }
+                paginationList = newPaginationList;
             }
-
-
             let isPrevious = pageInfo.currentPage === 1 ? "disabled" : "";
             let isNext = pageInfo.currentPage === pagesCount ? "disabled" : "";
             props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext });
 
-        },[props.pageInfo.totalCount]
+        }, [props.pageInfo.totalCount]
     );
 
     const pageChange = (currentPage => {
-         let {pageInfo, setPageInfo}=props
-            let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
-            let pages = _.range(1, pagesCount + 1);
-        
-         let paginationList = [...pageInfo.paginationList];
 
-        if (pagesCount > 2 && pagesCount > currentPage + 2) {
-            paginationList = [currentPage + 1, currentPage + 2, currentPage + 3];
-        } else if (pagesCount <= 2 || currentPage < 2) {
-            paginationList = pagesCount <= 1 ? [1] : [2];
+        let { pageInfo, setPageInfo } = props
+        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
+        let pages = _.range(1, pagesCount + 1);
+
+        let paginationList = [...pageInfo.paginationList];
+
+        if (pages.length < paginationList.length) {
+            paginationList = pages.slice(1);
+        } else if (pages.length > paginationList.length && (currentPage + paginationList.length) <= pagesCount) {
+            let newPaginationList = [];
+            for (let i = 0; i < paginationList.length; i++) {
+                const element =  currentPage+i+1;
+                console.log("element",element);
+                newPaginationList.push(element);
+            }
+            paginationList = newPaginationList;
         }
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === pagesCount ? "disabled" : "";
-        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext,currentPage: currentPage });
+        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
     })
 
     return (

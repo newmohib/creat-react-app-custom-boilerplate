@@ -12,12 +12,13 @@ function Pagination(props) {
             let paginationList = [...pageInfo.paginationList];
 
             if (pages.length < paginationList.length) {
-                paginationList = pages.slice(1);
+                paginationList = pages
             } else {
-                console.log("paginationList", pages.length, paginationList.length);
+                console.log("paginationList", pages, paginationList.length);
                 let newPaginationList = [];
                 for (let i = 0; i < paginationList.length; i++) {
-                    const element = pages[i] + 1;
+                    let element = pages[i];
+
                     console.log("element", element);
                     newPaginationList.push(element);
                 }
@@ -35,20 +36,25 @@ function Pagination(props) {
         let { pageInfo, setPageInfo } = props
         let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
         let pages = _.range(1, pagesCount + 1);
-
         let paginationList = [...pageInfo.paginationList];
+        let listChangeIndex = Math.floor(paginationList.length / 2);
 
         if (pages.length < paginationList.length) {
-            paginationList = pages.slice(1);
-        } else if (pages.length > paginationList.length && (currentPage + paginationList.length) <= pagesCount) {
+            paginationList = pages;
+        } else if (pages.length > paginationList.length && (currentPage + paginationList.length - listChangeIndex) <= pagesCount) {
+
             let newPaginationList = [];
             for (let i = 0; i < paginationList.length; i++) {
-                const element =  currentPage+i+1;
-                console.log("element",element);
-                newPaginationList.push(element);
+                if (currentPage <= pageInfo.totalCount && currentPage >= paginationList[listChangeIndex]) {
+                    let element = paginationList[i] + 1;
+                    newPaginationList.push(element);
+                } else {
+                    newPaginationList = paginationList
+                }
             }
             paginationList = newPaginationList;
         }
+
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === pagesCount ? "disabled" : "";
         props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });

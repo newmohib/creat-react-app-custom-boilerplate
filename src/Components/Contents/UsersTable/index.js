@@ -6,7 +6,7 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 1, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [2,3,4,5,], isPrevious: "", isNext: "" });
+    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1,2,3,4,5], isPrevious: "", isNext: "" });
     let [data,setData]=useState({dataList:[],fromDataIndex:0,toDataIndex:pageInfo.pageSize});
 
     let viewDetails = (index) => {
@@ -56,7 +56,7 @@ let Users = (props) => {
             let  fromDataIndex= data.fromDataIndex;
             let  toDataIndex= data.toDataIndex;
             let {totalCount}=getAllData(fromDataIndex,toDataIndex);
-            console.log("test",totalCount);
+            //console.log("test",totalCount);
 
             setPageInfo({...pageInfo,totalCount});
         },[]
@@ -64,12 +64,12 @@ let Users = (props) => {
 
     useEffect(
         () => {
-            console.log("test2");
+           // console.log("test2");
             let  fromDataIndex= pageInfo.currentPage === 1? data.fromDataIndex : (pageInfo.currentPage * pageInfo.pageSize) - pageInfo.pageSize;
             let  toDataIndex=pageInfo.currentPage === 1? data.toDataIndex: pageInfo.currentPage * pageInfo.pageSize;
-            console.log(fromDataIndex,toDataIndex);
+           // console.log(fromDataIndex,toDataIndex);
             let {dataList,totalCount}=getAllData(fromDataIndex,toDataIndex);
-            console.log(dataList,totalCount);
+           // console.log(dataList,totalCount);
             setData({dataList:dataList,fromDataIndex,toDataIndex})
             setPageInfo({...pageInfo,totalCount});
         },[pageInfo.currentPage]

@@ -65,8 +65,8 @@ let Users = (props) => {
     useEffect(
         () => {
            // console.log("test2");
-            let  fromDataIndex= pageInfo.currentPage === 1? data.fromDataIndex : (pageInfo.currentPage * pageInfo.pageSize) - pageInfo.pageSize;
-            let  toDataIndex=pageInfo.currentPage === 1? data.toDataIndex: pageInfo.currentPage * pageInfo.pageSize;
+            let  fromDataIndex= pageInfo.currentPage === 1? 0 : (pageInfo.currentPage * pageInfo.pageSize) - pageInfo.pageSize;
+            let  toDataIndex=pageInfo.currentPage === 1? pageInfo.pageSize: pageInfo.currentPage * pageInfo.pageSize;
            // console.log(fromDataIndex,toDataIndex);
             let {dataList,totalCount}=getAllData(fromDataIndex,toDataIndex);
            // console.log(dataList,totalCount);

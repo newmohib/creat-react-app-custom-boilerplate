@@ -31,13 +31,12 @@ function Pagination(props) {
         }, [props.pageInfo.totalCount]
     );
 
-    const pageChange = (currentPage => {
-
+    const pageChangeNext = ((currentPage) => {
         let { pageInfo, setPageInfo } = props
         let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
         let pages = _.range(1, pagesCount + 1);
         let paginationList = [...pageInfo.paginationList];
-        let listChangeIndex = Math.floor(paginationList.length / 2);
+        let listChangeIndex = Math.ceil(paginationList.length / 2);
 
         if (pages.length < paginationList.length) {
             paginationList = pages;
@@ -58,24 +57,55 @@ function Pagination(props) {
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === pagesCount ? "disabled" : "";
         props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
-    })
+    });
+
+    const pageChangePrevious = ((currentPage) => {
+        console.log("pageStr", currentPage);
+        let { pageInfo, setPageInfo } = props
+        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
+        let pages = _.range(1, pagesCount + 1);
+        let paginationList = [...pageInfo.paginationList];
+        let listChangeIndex = Math.ceil(paginationList.length / 2);
+
+        if (pages.length < paginationList.length) {
+            paginationList = pages;
+        } else if (pages.length > paginationList.length && (currentPage + paginationList.length - listChangeIndex) < pagesCount) {
+            let newPaginationList = [];
+            for (let i = paginationList.length; i > 0 ; i--) {
+                if ( paginationList[i-1] > 1) {
+                    let element = paginationList[i-1] - 1;
+                    newPaginationList.unshift(element);
+                 }
+                else {
+                    newPaginationList = paginationList
+                }
+            }
+            paginationList = newPaginationList;
+        }
+
+        let isPrevious = currentPage === 1 ? "disabled" : "";
+        let isNext = currentPage === pagesCount ? "disabled" : "";
+        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
+    });
+
+    const pageChangeFixed=()=>{}
 
     return (
         <div>
             <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-end mt-3">
                     <li className={`page-item ${props.pageInfo.isPrevious}`} >
-                        <a onClick={() => pageChange(props.pageInfo.currentPage - 1)} className="page-link px-4" >Previous</a>
+                        <a onClick={() => pageChangePrevious(props.pageInfo.currentPage - 1)} className="page-link px-4" >Previous</a>
                     </li>
                     {
                         props.pageInfo.paginationList.map((item, index) => {
                             return (<li key={index + 20} className="page-item">
-                                <a onClick={() => pageChange(item)} className="page-link px-4">{item}</a>
+                                <a onClick={() => pageChangeFixed(item)} className="page-link px-4">{item}</a>
                             </li>)
                         })
                     }
                     <li className={`page-item ${props.pageInfo.isNext}`}>
-                        <a onClick={() => pageChange(props.pageInfo.currentPage + 1)} className="page-link px-4" >Next</a>
+                        <a onClick={() => pageChangeNext(props.pageInfo.currentPage + 1)} className="page-link px-4" >Next</a>
                     </li>
                 </ul>
             </nav>

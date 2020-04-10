@@ -60,6 +60,7 @@ function Pagination(props) {
     });
 
     const pageChangePrevious = ((currentPage) => {
+
         console.log("pageStr", currentPage);
         let { pageInfo, setPageInfo } = props
         let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
@@ -88,7 +89,85 @@ function Pagination(props) {
         props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
     });
 
-    const pageChangeFixed=()=>{}
+    const pageChangeFixed=(currentPage)=>{
+        console.log("currentPage", currentPage);
+        let { pageInfo, setPageInfo } = props
+        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
+        let pages = _.range(1, pagesCount + 1);
+        let paginationList = [...pageInfo.paginationList];
+        let listChangeIndex = Math.ceil(paginationList.length / 2);
+
+        console.log("pages.length",currentPage - paginationList.length + listChangeIndex, pagesCount,listChangeIndex);
+        if (pages.length < paginationList.length) {
+
+            paginationList = pages;
+        } else if (pages.length > paginationList.length && (currentPage - paginationList.length + listChangeIndex) < pagesCount && currentPage < pagesCount) {
+            let newPaginationList = [];
+            let currentPageIndex= paginationList.indexOf(currentPage);
+            console.log("currentPageIndex",currentPageIndex);
+            console.log("listChangeIndex",listChangeIndex);
+            for (let i = 0; i < paginationList.length; i++) {
+
+                if ( i > 0 && i <= listChangeIndex && currentPage > listChangeIndex ) {
+                    let element = currentPage-i;
+                    console.log("1",element);
+                     newPaginationList.unshift(element);  
+                }
+                else if(listChangeIndex === i && currentPage > listChangeIndex){
+                    let element = currentPage+1;
+                    console.log("2",element);
+                     newPaginationList.push(element);
+                }
+                else if( i > 0 && i > listChangeIndex && currentPage > listChangeIndex ){
+                    let element = newPaginationList[i-1]+1;
+                    console.log("3",element);
+                    if (element <=pagesCount ) {
+                        newPaginationList.push(element);
+                    }
+                    else if(element > pagesCount ){
+                        let element = newPaginationList[0]-1;
+                        newPaginationList.unshift(element);
+                    }
+                }
+                else if(i === 0 && currentPage > listChangeIndex){
+                    let element = currentPage-i;
+                    console.log("4",element);
+                     newPaginationList.unshift(element);
+                }else{
+                    newPaginationList = paginationList
+                }
+
+                //  if ( i > 0 && i <= listChangeIndex && currentPage-i >1) {
+                //     let element = currentPage-i;
+                //     console.log("1",element);
+                //      newPaginationList.unshift(element);  
+                // }
+                // else if(listChangeIndex === i){
+                //     let element = currentPage+1;
+                //     console.log("2",element);
+                //      newPaginationList.push(element);
+                // }
+                // else if( i > 0 && i > listChangeIndex){
+                //     let element = newPaginationList[i-1]+1;
+                //     console.log("3",element);
+                //     newPaginationList.push(element);
+                // }
+                // else if(i === 0){
+                //     let element = currentPage-i;
+                //     console.log("4",element);
+                //      newPaginationList.unshift(element);
+                // }
+
+            }
+        
+            console.log(newPaginationList);
+            paginationList = newPaginationList;
+        }
+
+        let isPrevious = currentPage === 1 ? "disabled" : "";
+        let isNext = currentPage === pagesCount ? "disabled" : "";
+        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
+    }
 
     return (
         <div>

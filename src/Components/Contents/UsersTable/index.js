@@ -6,7 +6,7 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1,2,3,4,5], isPrevious: "", isNext: "" });
+    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1,2,3,4,5,6,7,8,9,10], isPrevious: "", isNext: "" });
     let [data,setData]=useState({dataList:[],fromDataIndex:0,toDataIndex:pageInfo.pageSize});
 
     let viewDetails = (index) => {

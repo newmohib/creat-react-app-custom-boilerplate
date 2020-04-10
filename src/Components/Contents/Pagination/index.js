@@ -104,23 +104,23 @@ function Pagination(props) {
         } else if (pages.length > paginationList.length && (currentPage - paginationList.length + listChangeIndex) < pagesCount && currentPage < pagesCount) {
             let newPaginationList = [];
             let currentPageIndex= paginationList.indexOf(currentPage);
-            console.log("currentPageIndex",currentPageIndex);
-            console.log("listChangeIndex",listChangeIndex);
+            // console.log("currentPageIndex",currentPageIndex);
+            // console.log("listChangeIndex",listChangeIndex);
             for (let i = 0; i < paginationList.length; i++) {
 
                 if ( i > 0 && i <= listChangeIndex && currentPage > listChangeIndex ) {
                     let element = currentPage-i;
-                    console.log("1",element);
+                    //console.log("1",element);
                      newPaginationList.unshift(element);  
                 }
                 else if(listChangeIndex === i && currentPage > listChangeIndex){
                     let element = currentPage+1;
-                    console.log("2",element);
+                   // console.log("2",element);
                      newPaginationList.push(element);
                 }
                 else if( i > 0 && i > listChangeIndex && currentPage > listChangeIndex ){
                     let element = newPaginationList[i-1]+1;
-                    console.log("3",element);
+                   // console.log("3",element);
                     if (element <=pagesCount ) {
                         newPaginationList.push(element);
                     }
@@ -131,7 +131,7 @@ function Pagination(props) {
                 }
                 else if(i === 0 && currentPage > listChangeIndex){
                     let element = currentPage-i;
-                    console.log("4",element);
+                   // console.log("4",element);
                      newPaginationList.unshift(element);
                 }else{
                     newPaginationList = paginationList

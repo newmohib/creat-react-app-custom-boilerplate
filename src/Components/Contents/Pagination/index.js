@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
+import { IoMdArrowRoundForward,IoMdArrowRoundBack } from "react-icons/io";
 
 function Pagination(props) {
 
@@ -89,24 +90,30 @@ function Pagination(props) {
 
     return (
 
-        <div>
-            <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-end mt-3">
-                    <li className={`page-item ${props.pageInfo.isPrevious}`} >
-                        <a onClick={() => pageChange(props.pageInfo.currentPage - 1)} className="page-link px-4" >Previous</a>
-                    </li>
+        <div className="row text-right mt-4" style={{ overflowX: "auto" }}>
+            <div className="col question_number_padding">
+                <div className="scrolling-wrapper">
+                    <div className="card" >
+                        <button onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isPrevious}`}><span><IoMdArrowRoundBack/></span></button>
+                    </div>
                     {
                         props.pageInfo.paginationList.map((item, index) => {
-                            return (<li key={index + 20} className="page-item">
-                                <a onClick={() => pageChange(item)} className="page-link px-4">{item}</a>
-                            </li>)
+                            let isActive = item === props.pageInfo.currentPage?"btn btn-primary":"btn btn-link";
+                            let newItem=item;
+                            return (
+                                <div key={index + 20} className="card mr-1">
+                                    <button onClick={() => pageChange(item)} className={`${isActive} border_radius_50`}>
+                                        {newItem =newItem <=9?`0${newItem}`:newItem}
+                                    </button>
+                                </div>
+                            )
                         })
                     }
-                    <li className={`page-item ${props.pageInfo.isNext}`}>
-                        <a onClick={() => pageChange(props.pageInfo.currentPage + 1)} className="page-link px-4" >Next</a>
-                    </li>
-                </ul>
-            </nav>
+                    <div className="card">
+                        <button onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isNext}`}><span><IoMdArrowRoundForward/></span></button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

@@ -56,8 +56,8 @@ a:hover{
 	border-radius: 50%;
 }
 
-.border_radius_20{
-	border-radius: 20%;
+.border_radius_40{
+	border-radius: 40%;
 }
 
 .scrolling-wrapper {
@@ -74,4 +74,9 @@ a:hover{
     outline: none;
     
   }
+
+  .btn-link{
+    color: #0056b3;
+    text-decoration: none !important;
+}
 

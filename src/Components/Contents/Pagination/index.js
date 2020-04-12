@@ -31,150 +31,77 @@ function Pagination(props) {
         }, [props.pageInfo.totalCount]
     );
 
-    const pageChangeNext = ((currentPage) => {
-        let { pageInfo, setPageInfo } = props
-        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
-        let pages = _.range(1, pagesCount + 1);
-        let paginationList = [...pageInfo.paginationList];
-        let listChangeIndex = Math.ceil(paginationList.length / 2);
+    
 
-        if (pages.length < paginationList.length) {
-            paginationList = pages;
-        } else if (pages.length > paginationList.length && (currentPage + paginationList.length - listChangeIndex) <= pagesCount) {
+    const GetPager = (totalItems, currentPage, pageSize) =>   {
+    // default to first page
+    currentPage = currentPage || 1;
 
-            let newPaginationList = [];
-            for (let i = 0; i < paginationList.length; i++) {
-                if (currentPage <= pageInfo.totalCount && currentPage >= paginationList[listChangeIndex]) {
-                    let element = paginationList[i] + 1;
-                    newPaginationList.push(element);
-                } else {
-                    newPaginationList = paginationList
-                }
-            }
-            paginationList = newPaginationList;
+    // default page size is 10
+    pageSize = pageSize || 10;
+
+    // calculate total pages
+    var totalPages = Math.ceil(totalItems / pageSize);
+
+    var startPage, endPage;
+    if (totalPages <= 10) {
+        // less than 10 total pages so show all
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        // more than 10 total pages so calculate start and end pages
+        if (currentPage <= 6) {
+            startPage = 1;
+            endPage = 10; // paginationList.length
+        } else if (currentPage + 4 >= totalPages) {
+            startPage = totalPages - 9;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
         }
-
-        let isPrevious = currentPage === 1 ? "disabled" : "";
-        let isNext = currentPage === pagesCount ? "disabled" : "";
-        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
-    });
-
-    const pageChangePrevious = ((currentPage) => {
-
-        console.log("pageStr", currentPage);
-        let { pageInfo, setPageInfo } = props
-        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
-        let pages = _.range(1, pagesCount + 1);
-        let paginationList = [...pageInfo.paginationList];
-        let listChangeIndex = Math.ceil(paginationList.length / 2);
-
-        if (pages.length < paginationList.length) {
-            paginationList = pages;
-        } else if (pages.length > paginationList.length && (currentPage + paginationList.length - listChangeIndex) < pagesCount) {
-            let newPaginationList = [];
-            for (let i = paginationList.length; i > 0 ; i--) {
-                if ( paginationList[i-1] > 1) {
-                    let element = paginationList[i-1] - 1;
-                    newPaginationList.unshift(element);
-                 }
-                else {
-                    newPaginationList = paginationList
-                }
-            }
-            paginationList = newPaginationList;
-        }
-
-        let isPrevious = currentPage === 1 ? "disabled" : "";
-        let isNext = currentPage === pagesCount ? "disabled" : "";
-        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
-    });
-
-    const pageChangeFixed=(currentPage)=>{
-        console.log("currentPage", currentPage);
-        let { pageInfo, setPageInfo } = props
-        let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
-        let pages = _.range(1, pagesCount + 1);
-        let paginationList = [...pageInfo.paginationList];
-        let listChangeIndex = Math.ceil(paginationList.length / 2);
-
-        console.log("pages.length",currentPage - paginationList.length + listChangeIndex, pagesCount,listChangeIndex);
-        if (pages.length < paginationList.length) {
-
-            paginationList = pages;
-        } else if (pages.length > paginationList.length && (currentPage - paginationList.length + listChangeIndex) < pagesCount && currentPage < pagesCount) {
-            let newPaginationList = [];
-            let currentPageIndex= paginationList.indexOf(currentPage);
-            // console.log("currentPageIndex",currentPageIndex);
-            // console.log("listChangeIndex",listChangeIndex);
-            for (let i = 0; i < paginationList.length; i++) {
-
-                if ( i > 0 && i <= listChangeIndex && currentPage > listChangeIndex ) {
-                    let element = currentPage-i;
-                    //console.log("1",element);
-                     newPaginationList.unshift(element);  
-                }
-                else if(listChangeIndex === i && currentPage > listChangeIndex){
-                    let element = currentPage+1;
-                   // console.log("2",element);
-                     newPaginationList.push(element);
-                }
-                else if( i > 0 && i > listChangeIndex && currentPage > listChangeIndex ){
-                    let element = newPaginationList[i-1]+1;
-                   // console.log("3",element);
-                    if (element <=pagesCount ) {
-                        newPaginationList.push(element);
-                    }
-                    else if(element > pagesCount ){
-                        let element = newPaginationList[0]-1;
-                        newPaginationList.unshift(element);
-                    }
-                }
-                else if(i === 0 && currentPage > listChangeIndex){
-                    let element = currentPage-i;
-                   // console.log("4",element);
-                     newPaginationList.unshift(element);
-                }else{
-                    newPaginationList = paginationList
-                }
-
-                //  if ( i > 0 && i <= listChangeIndex && currentPage-i >1) {
-                //     let element = currentPage-i;
-                //     console.log("1",element);
-                //      newPaginationList.unshift(element);  
-                // }
-                // else if(listChangeIndex === i){
-                //     let element = currentPage+1;
-                //     console.log("2",element);
-                //      newPaginationList.push(element);
-                // }
-                // else if( i > 0 && i > listChangeIndex){
-                //     let element = newPaginationList[i-1]+1;
-                //     console.log("3",element);
-                //     newPaginationList.push(element);
-                // }
-                // else if(i === 0){
-                //     let element = currentPage-i;
-                //     console.log("4",element);
-                //      newPaginationList.unshift(element);
-                // }
-
-            }
-        
-            console.log(newPaginationList);
-            paginationList = newPaginationList;
-        }
-
-        let isPrevious = currentPage === 1 ? "disabled" : "";
-        let isNext = currentPage === pagesCount ? "disabled" : "";
-        props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext, currentPage: currentPage });
     }
+
+    // calculate start and end item indexes
+    var startIndex = (currentPage - 1) * pageSize;
+    var endIndex = startIndex + pageSize;
+
+    // create an array of pages to ng-repeat in the pager control
+    var pages = _.range(startPage, endPage + 1);
+
+    // return object with all pager properties required by the view
+    return {
+        totalItems: totalItems,
+        currentPage: currentPage,
+        pageSize: pageSize,
+        totalPages: totalPages,
+        startPage: startPage,
+        endPage: endPage,
+        startIndex: startIndex,
+        endIndex: endIndex,
+        pages: pages
+    };
+}
+
+    const pageChangeFixed=(newCurrentPage)=>{
+       
+        let { pageInfo, setPageInfo } = props
+
+       let {totalItems,currentPage ,pageSize, totalPages, startPage, endPage, startIndex,endIndex,pages }= GetPager(pageInfo.totalCount, newCurrentPage, pageInfo.pageSize);
+
+        let isPrevious = currentPage === 1 ? "disabled" : "";
+        let isNext = currentPage === totalPages ? "disabled" : "";
+        props.setPageInfo({ ...pageInfo, pagesCount:totalPages, pages, paginationList:pages, isPrevious, isNext, currentPage});
+    }
+
+
 
     return (
         <div>
             <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-end mt-3">
                     <li className={`page-item ${props.pageInfo.isPrevious}`} >
-                        <a onClick={() => pageChangePrevious(props.pageInfo.currentPage - 1)} className="page-link px-4" >Previous</a>
+                        <a onClick={() => pageChangeFixed(props.pageInfo.currentPage - 1)} className="page-link px-4" >Previous</a>
                     </li>
                     {
                         props.pageInfo.paginationList.map((item, index) => {
@@ -184,7 +111,7 @@ function Pagination(props) {
                         })
                     }
                     <li className={`page-item ${props.pageInfo.isNext}`}>
-                        <a onClick={() => pageChangeNext(props.pageInfo.currentPage + 1)} className="page-link px-4" >Next</a>
+                        <a onClick={() => pageChangeFixed(props.pageInfo.currentPage + 1)} className="page-link px-4" >Next</a>
                     </li>
                 </ul>
             </nav>

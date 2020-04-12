@@ -42,3 +42,36 @@ body > .container {
 a:hover{
     cursor: pointer;
 }
+
+
+
+
+
+.question_number_padding{
+	padding-left: 2.5px;
+	/*padding-right: 2.5px;*/
+}
+
+.border_radius_50{
+	border-radius: 50%;
+}
+
+.border_radius_20{
+	border-radius: 20%;
+}
+
+.scrolling-wrapper {
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	margin-left: 12px;
+	
+  }
+
+  .card {
+    display: inline-block;
+    border: none;
+    outline: none;
+    
+  }
+

@@ -99,14 +99,15 @@ function Pagination(props) {
 
         <div className="container-fluid mt-2">
             <div className="row" >
-                <div className="col-4 pl-0">
+                <div className="col px-0">
                     <div>
-                        <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg px-4 ${props.pageInfo.isPrevious}`}><span>Previous</span></button>
+                        <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isPrevious}`}><span>Previous</span></button>
                     </div>
                 </div>
-                <div className="col-auto mr-auto ml-auto">
+                <div className="col-5 col-md-auto mr-auto ml-auto my-auto">
                     <div>
                         <select
+                            style={{padding:"5px"}}
                             className="form-control"
                             onChange={pageSizeChange} >
                             {props.pageInfo.pageSizeList.map((item, index) => {
@@ -123,8 +124,8 @@ function Pagination(props) {
                         </select>
                     </div>
                 </div>
-                <div className="col-4 pr-0">
-                    <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light btn-block  btn-lg px-5 ${props.pageInfo.isNext}`}><span>Next</span></button>
+                <div className="col px-0">
+                    <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isNext}`}><span>Next</span></button>
                 </div>
             </div>
         </div>

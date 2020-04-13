@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
-import { IoMdArrowRoundForward,IoMdArrowRoundBack } from "react-icons/io";
+import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
 
 function Pagination(props) {
 
@@ -26,7 +26,7 @@ function Pagination(props) {
             let isNext = pageInfo.currentPage === pagesCount ? "disabled" : "";
             props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext });
 
-        }, [props.pageInfo.totalCount]
+        }, [props.pageInfo.totalCount ]
     );
 
 
@@ -88,31 +88,66 @@ function Pagination(props) {
         props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, isPrevious, isNext, currentPage });
     }
 
+    const pageSizeChange=({ currentTarget: input })=>{
+        let { pageInfo } = props
+        console.log("pageSizeChange",input.value);
+        let newPageSize= input.value;
+        let { totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages } = getPager(pageInfo.totalCount,pageInfo.currentPage, newPageSize, pageInfo.paginationList);
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, currentPage ,pageSize});
+
+    }
+
     return (
 
-        <div className="row text-right mt-4" style={{ overflowX: "auto" }}>
-            <div className="col question_number_padding">
+        <div className="row text-center mt-4" style={{ overflowX: "auto" }}>
+            <div className="col page_number_padding">
                 <div className="scrolling-wrapper">
+                    <div className="card mr-3">
+                    <select
+                    className="form-control"
+                    onChange={pageSizeChange} >
+                   
+                    {props.pageInfo.pageSizeList.map((item,index) =>{
+                        let newItem=item <10? `0${item} rows`:`${item} rows`;
+
+                        return(
+                        <option
+                            key={index+40}
+                            value={item}
+                        >{newItem}
+                        </option>
+                        )
+                    }
+                    )}
+                </select>
+
+                        {/* <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select> */}
+                    </div>
                     <div className="card" >
-                        <button onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isPrevious}`}><span><IoMdArrowRoundBack/></span></button>
+                        <button onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isPrevious}`}><span><IoMdArrowRoundBack /></span></button>
                     </div>
                     {
                         props.pageInfo.paginationList.map((item, index) => {
-                            let isActive = item === props.pageInfo.currentPage?"btn btn-primary":"btn btn-link";
-                            let newItem=item;
+                            let isActive = item === props.pageInfo.currentPage ? "btn btn-primary" : "btn btn-link";
+                            let newItem = item;
                             return (
                                 <div key={index + 20} className="card mr-1">
                                     <button onClick={() => pageChange(item)} className={`${isActive} border_radius_50`}>
-                                        {newItem =newItem <=9?`0${newItem}`:newItem}
+                                        {newItem = newItem <= 9 ? `0${newItem}` : newItem}
                                     </button>
                                 </div>
                             )
                         })
                     }
                     <div className="card">
-                        <button onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isNext}`}><span><IoMdArrowRoundForward/></span></button>
+                        <button onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isNext}`}><span><IoMdArrowRoundForward /></span></button>
                     </div>
+
                 </div>
+
             </div>
         </div>
     );

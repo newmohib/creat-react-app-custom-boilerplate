@@ -6,7 +6,7 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1,2,3,4,5,6], isPrevious: "", isNext: "" });
+    let [pageInfo, setPageInfo] = useState({ pageSize: 5, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1,2,3,4,5,6], isPrevious: "", isNext: "" ,pageSizeList:[5,10,20,30,50]});
     let [data,setData]=useState({dataList:[],fromDataIndex:0,toDataIndex:pageInfo.pageSize});
 
     let viewDetails = (index) => {
@@ -72,7 +72,7 @@ let Users = (props) => {
            // console.log(dataList,totalCount);
             setData({dataList:dataList,fromDataIndex,toDataIndex})
             setPageInfo({...pageInfo,totalCount});
-        },[pageInfo.currentPage]
+        },[pageInfo.currentPage,pageInfo.pageSize]
     );
 
     return (

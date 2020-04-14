@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
-import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
 
 function Pagination(props) {
 
     useEffect(
         () => {
-            let { pageInfo, setPageInfo } = props;
+            let { pageInfo } = props;
             let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
             let pages = _.range(1, pagesCount + 1);
 
+            let allPages =createPageList( pageInfo.currentPage, pagesCount);
+           // let allPages =createPageList( pageInfo.currentPage, 300);
             let paginationList = [...pageInfo.paginationList];
 
             if (pages.length < paginationList.length) {
@@ -22,9 +23,9 @@ function Pagination(props) {
                 }
                 paginationList = newPaginationList;
             }
-            let isPrevious = pageInfo.currentPage === 1 ? "disabled" : "";
-            let isNext = pageInfo.currentPage === pagesCount ? "disabled" : "";
-            props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext });
+            let isPrevious =  Number(pageInfo.currentPage) == 1 ? "disabled" : "";
+            let isNext = Number(pageInfo.currentPage) == pagesCount ? "disabled" : "";
+            props.setPageInfo({ ...pageInfo, pagesCount, pages:allPages, paginationList, isPrevious, isNext });
 
         }, [props.pageInfo.totalCount]
     );
@@ -34,19 +35,14 @@ function Pagination(props) {
         let middleCeilIndex = Math.ceil(paginationList.length / 2);
         let middleFloorIndex = Math.floor(paginationList.length / 2);
         let remainingMeddleIndex = paginationList.length - middleCeilIndex;
-        // default to first page
         currentPage = currentPage || 1;
-        // default page size is 10
         pageSize = pageSize || 10;
-        // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
         var startPage, endPage;
         if (totalPages <= paginationList.length) {
-            // less than 10 total pages so show all
             startPage = 1;
             endPage = totalPages;
         } else {
-            // more than 10 total pages so calculate start and end pages
             if (currentPage <= middleCeilIndex) {
                 startPage = 1;
                 endPage = paginationList.length;
@@ -58,12 +54,9 @@ function Pagination(props) {
                 endPage = currentPage + middleFloorIndex - 1;
             }
         }
-        // calculate start and end item indexes
         var startIndex = (currentPage - 1) * pageSize;
         var endIndex = startIndex + pageSize;
-        // create an array of pages to ng-repeat in the pager control
         var pages = _.range(startPage, endPage + 1);
-        // return object with all pager properties required by the view
         return {
             totalItems: totalItems,
             currentPage: currentPage,
@@ -77,22 +70,62 @@ function Pagination(props) {
         };
     }
 
+    const createPageList = (currentPage, pageCount) => {
+        let total = 50;
+        currentPage=Number(currentPage);
+        pageCount =Number(pageCount);
+
+        let incrementTo=  currentPage + total >= pageCount ? pageCount : currentPage + total;
+        let increment = _.range(currentPage+1, incrementTo+1);
+        let decrementTo = total > increment[0] ? increment[0]-1 : pageCount <= total?pageCount: total;
+        let decrement = _.range(currentPage - decrementTo + 1, currentPage+1);
+
+        let incrementDecrement = [...decrement, ...increment];
+        let lastElemnet = incrementDecrement.slice(-1)[0];
+        let newIncrementDecrement =[];
+
+        if (decrement.length < increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount ) {
+            let remainingIncrementTotal = (total * 2) - incrementDecrement.length;
+            let remainingIncrement = _.range(lastElemnet + 1, incrementDecrement.length + remainingIncrementTotal + 1);
+             newIncrementDecrement = [...incrementDecrement, ...remainingIncrement];
+        }
+        else if (decrement.length === increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount ) {
+            newIncrementDecrement= [ ...incrementDecrement ];
+        }
+        else if(decrement.length > increment.length &&  increment.length < total && (total * 2) <= pageCount ){
+            let remainingDecrementTotal = total - increment.length;
+            let remainingDecrement = _.range( currentPage - remainingDecrementTotal - total , currentPage);
+            newIncrementDecrement=[...remainingDecrement, ...increment ];
+        }
+        // else if(currentPage === pageCount){
+        //     decrement = _.range(currentPage - decrementTo + 1, currentPage+1);
+        // }
+        else{
+            newIncrementDecrement= [ ...incrementDecrement ];
+        }
+        return newIncrementDecrement
+    }
+
     const pageChange = (newCurrentPage) => {
-
-        let { pageInfo, setPageInfo } = props
-        let { totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages } = getPager(pageInfo.totalCount, newCurrentPage, pageInfo.pageSize, pageInfo.paginationList);
-
+        
+        let { pageInfo } = props
+        let { currentPage, totalPages, pages } = getPager(pageInfo.totalCount, newCurrentPage, pageInfo.pageSize, pageInfo.paginationList);
+        currentPage=Number(currentPage)
+        // let allPages = _.range(1, pageInfo.pagesCount + 1);
+        //let allPages =createPageList(newCurrentPage, 300);
+        let allPages =createPageList(newCurrentPage, pageInfo.pagesCount);
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === totalPages ? "disabled" : "";
-        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, isPrevious, isNext, currentPage });
+
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, isPrevious, isNext, currentPage });
     }
 
     const pageSizeChange = ({ currentTarget: input }) => {
         let { pageInfo } = props
-        console.log("pageSizeChange", input.value);
         let newPageSize = input.value;
-        let { totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, newPageSize, pageInfo.paginationList);
-        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, currentPage, pageSize });
+        let { currentPage, pageSize, totalPages, pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, newPageSize, pageInfo.paginationList);
+        let allPages = _.range(1, pageInfo.pagesCount + 1);
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, currentPage, pageSize });
     }
 
     return (
@@ -101,88 +134,57 @@ function Pagination(props) {
             <div className="row" >
                 <div className="col px-0 mb-2 mr-1 order-1 order-md-0">
                     <div>
-                        <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isPrevious}`}><span>Previous</span></button>
+                        <button disabled={props.pageInfo.isPrevious} style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg`}><span>Previous</span></button>
                     </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-auto mr-auto ml-auto my-auto order-0">
                     <div className="container-fluid">
-                    <div className="row text-center">
-                    <div className="col-6 col-sm-6 col-md-auto m-auto">
-                        <select
-                            style={{padding:"5px"}}
-                            className="form-control mb-2"
-                            onChange={pageSizeChange} >
-                            {props.pageInfo.pageSizeList.map((item, index) => {
-                                let newItem = item < 10 ? `0${item} rows` : `${item} rows`;
-                                return (
-                                    <option
-                                        key={index + 40}
-                                        value={item}
-                                    >{newItem}
-                                    </option>
-                                )
-                            }
-                            )}
-                        </select>
-                    </div>
-                    </div>
+                        <div className="row text-center">
+                            <div className="col-6 col-sm-6 col-md-auto m-auto">
+                                <select
+                                    style={{ padding: "5px" }}
+                                    className="form-control mb-2"
+                                    onChange={pageSizeChange} >
+
+                                    {props.pageInfo.pageSizeList.map((item, index) => {
+                                        let newItem = item < 10 ? `0${item} rows` : `${item} rows`;
+                                        return (
+                                            <option
+                                                key={index + 40}
+                                                value={item}
+                                            >{newItem}
+                                            </option>
+                                        )
+                                    }
+                                    )}
+                                </select>
+                            </div>
+                            <div className="col-6 col-sm-6 col-md-auto m-auto">
+                                <select
+                                    value={props.pageInfo.currentPage}
+                                    className="form-control mb-2"
+                                    onChange={({ currentTarget }) => pageChange(currentTarget.value)} >
+                                    {props.pageInfo.pages.map((item, index) => {
+                                        let newItem = item < 10 ? `0${item}` : `${item}`;
+                                        return (
+                                            <option
+                                                key={index + 50}
+                                                value={item}
+                                            >{newItem}
+                                            </option>
+                                        )
+                                    }
+                                    )}
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="col px-0 order-2 order-md-last mb-2 ml-1">
-                    <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isNext}`}><span>Next</span></button>
+                    <button disabled={props.pageInfo.isNext} style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light btn-block btn-lg`}><span>Next</span></button>
                 </div>
             </div>
         </div>
-
-
-
-
-
-        // <div className="row text-center mt-4" style={{ overflowX: "auto" }}>
-        //     <div className="col ">
-        //         <div className="scrolling-wrapper">
-        //             <div className="card mr-3">
-        //                 <select
-        //                     className="form-control"
-        //                     onChange={pageSizeChange} >
-        //                     {props.pageInfo.pageSizeList.map((item, index) => {
-        //                         let newItem = item < 10 ? `0${item} rows` : `${item} rows`;
-
-        //                         return (
-        //                             <option
-        //                                 key={index + 40}
-        //                                 value={item}
-        //                             >{newItem}
-        //                             </option>
-        //                         )
-        //                     }
-        //                     )}
-        //                 </select>
-        //             </div>
-        //             <div className="card" >
-        //                 <button onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isPrevious}`}><span><IoMdArrowRoundBack /></span></button>
-        //             </div>
-        //             {
-        //                 props.pageInfo.paginationList.map((item, index) => {
-        //                     let isActive = item === props.pageInfo.currentPage ? "btn btn-primary" : "btn btn-link";
-        //                     let newItem = item;
-        //                     return (
-        //                         <div key={index + 20} className="card mr-1">
-        //                             <button onClick={() => pageChange(item)} className={`${isActive} border_radius_50`}>
-        //                                 {newItem = newItem <= 9 ? `0${newItem}` : newItem}
-        //                             </button>
-        //                         </div>
-        //                     )
-        //                 })
-        //             }
-        //             <div className="card">
-        //                 <button onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light border_radius_50 ${props.pageInfo.isNext}`}><span><IoMdArrowRoundForward /></span></button>
-        //             </div>
-
-        //         </div>
-
-        //     </div>
-        // </div>
     );
 }
 

@@ -99,12 +99,12 @@ function Pagination(props) {
 
         <div className="container-fluid mt-2">
             <div className="row" >
-                <div className="col px-0 mb-2 mr-1">
+                <div className="col px-0 mb-2 mr-1 order-1 order-md-0">
                     <div>
                         <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isPrevious}`}><span>Previous</span></button>
                     </div>
                 </div>
-                <div className="col-12 col-sm-12 col-md-auto mr-auto ml-auto my-auto order-2">
+                <div className="col-12 col-sm-12 col-md-auto mr-auto ml-auto my-auto order-0">
                     <div className="container-fluid">
                     <div className="row text-center">
                     <div className="col-6 col-sm-6 col-md-auto m-auto">
@@ -128,7 +128,7 @@ function Pagination(props) {
                     </div>
                     </div>
                 </div>
-                <div className="col px-0 order-md-last mb-2 ml-1">
+                <div className="col px-0 order-2 order-md-last mb-2 ml-1">
                     <button style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage + 1)} className={`btn btn-light btn-block btn-lg ${props.pageInfo.isNext}`}><span>Next</span></button>
                 </div>
             </div>

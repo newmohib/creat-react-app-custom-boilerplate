@@ -88,13 +88,13 @@ function Pagination(props) {
         props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, isPrevious, isNext, currentPage });
     }
 
-    const pageSizeChange=({ currentTarget: input })=>{
+    const pageSizeChange = ({ currentTarget: input }) => {
         let { pageInfo } = props
-        console.log("pageSizeChange",input.value);
-        let newPageSize= input.value;
-        let { totalItems, currentPage, pageSize, totalPages, startPage, endPage, startIndex, endIndex, pages } = getPager(pageInfo.totalCount,pageInfo.currentPage, newPageSize, pageInfo.paginationList);
-        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages, paginationList: pages, currentPage ,pageSize});
-
+        let newPageSize = input.value;
+        let { currentPage, pageSize, totalPages, pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, newPageSize, pageInfo.paginationList);
+        currentPage= currentPage > totalPages ? totalPages: currentPage
+        let allPages = _.range(1, totalPages + 1);
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, currentPage, pageSize });
     }
 
     return (

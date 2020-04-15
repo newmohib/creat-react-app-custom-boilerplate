@@ -9,8 +9,8 @@ function Pagination(props) {
             let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
             let pages = _.range(1, pagesCount + 1);
 
-            let allPages =createPageList( pageInfo.currentPage, pagesCount);
-           // let allPages =createPageList( pageInfo.currentPage, 300);
+            let allPages = createPageList(pageInfo.currentPage, pagesCount);
+            // let allPages =createPageList( pageInfo.currentPage, 300);
             let paginationList = [...pageInfo.paginationList];
 
             if (pages.length < paginationList.length) {
@@ -23,9 +23,9 @@ function Pagination(props) {
                 }
                 paginationList = newPaginationList;
             }
-            let isPrevious =  Number(pageInfo.currentPage) == 1 ? "disabled" : "";
+            let isPrevious = Number(pageInfo.currentPage) == 1 ? "disabled" : "";
             let isNext = Number(pageInfo.currentPage) == pagesCount ? "disabled" : "";
-            props.setPageInfo({ ...pageInfo, pagesCount, pages:allPages, paginationList, isPrevious, isNext });
+            props.setPageInfo({ ...pageInfo, pagesCount, pages: allPages, paginationList, isPrevious, isNext });
 
         }, [props.pageInfo.totalCount]
     );
@@ -72,48 +72,48 @@ function Pagination(props) {
 
     const createPageList = (currentPage, pageCount) => {
         let total = 50;
-        currentPage=Number(currentPage);
-        pageCount =Number(pageCount);
+        currentPage = Number(currentPage);
+        pageCount = Number(pageCount);
 
-        let incrementTo=  currentPage + total >= pageCount ? pageCount : currentPage + total;
-        let increment = _.range(currentPage+1, incrementTo+1);
-        let decrementTo = total > increment[0] ? increment[0]-1 : pageCount <= total?pageCount: total;
-        let decrement = _.range(currentPage - decrementTo + 1, currentPage+1);
+        let incrementTo = currentPage + total >= pageCount ? pageCount : currentPage + total;
+        let increment = _.range(currentPage + 1, incrementTo + 1);
+        let decrementTo = total > increment[0] ? increment[0] - 1 : pageCount <= total ? pageCount : total;
+        let decrement = _.range(currentPage - decrementTo + 1, currentPage + 1);
 
         let incrementDecrement = [...decrement, ...increment];
         let lastElemnet = incrementDecrement.slice(-1)[0];
-        let newIncrementDecrement =[];
+        let newIncrementDecrement = [];
 
-        if (decrement.length < increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount ) {
+        if (decrement.length < increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount) {
             let remainingIncrementTotal = (total * 2) - incrementDecrement.length;
             let remainingIncrement = _.range(lastElemnet + 1, incrementDecrement.length + remainingIncrementTotal + 1);
-             newIncrementDecrement = [...incrementDecrement, ...remainingIncrement];
+            newIncrementDecrement = [...incrementDecrement, ...remainingIncrement];
         }
-        else if (decrement.length === increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount ) {
-            newIncrementDecrement= [ ...incrementDecrement ];
+        else if (decrement.length === increment.length && lastElemnet <= pageCount && (total * 2) <= pageCount) {
+            newIncrementDecrement = [...incrementDecrement];
         }
-        else if(decrement.length > increment.length &&  increment.length < total && (total * 2) <= pageCount ){
+        else if (decrement.length > increment.length && increment.length < total && (total * 2) <= pageCount) {
             let remainingDecrementTotal = total - increment.length;
-            let remainingDecrement = _.range( currentPage - remainingDecrementTotal - total , currentPage);
-            newIncrementDecrement=[...remainingDecrement, ...increment ];
+            let remainingDecrement = _.range(currentPage - remainingDecrementTotal - total, currentPage);
+            newIncrementDecrement = [...remainingDecrement, ...increment];
         }
         // else if(currentPage === pageCount){
         //     decrement = _.range(currentPage - decrementTo + 1, currentPage+1);
         // }
-        else{
-            newIncrementDecrement= [ ...incrementDecrement ];
+        else {
+            newIncrementDecrement = [...incrementDecrement];
         }
         return newIncrementDecrement
     }
 
     const pageChange = (newCurrentPage) => {
-        
+
         let { pageInfo } = props
         let { currentPage, totalPages, pages } = getPager(pageInfo.totalCount, newCurrentPage, pageInfo.pageSize, pageInfo.paginationList);
-        currentPage=Number(currentPage)
+        currentPage = Number(currentPage)
         // let allPages = _.range(1, pageInfo.pagesCount + 1);
         //let allPages =createPageList(newCurrentPage, 300);
-        let allPages =createPageList(newCurrentPage, pageInfo.pagesCount);
+        let allPages = createPageList(newCurrentPage, pageInfo.pagesCount);
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === totalPages ? "disabled" : "";
 
@@ -137,13 +137,13 @@ function Pagination(props) {
                         <button disabled={props.pageInfo.isPrevious} style={{ backgroundColor: "#F0EFEF", color: "black", border: "none" }} onClick={() => pageChange(props.pageInfo.currentPage - 1)} className={`btn btn-light btn-block btn-lg`}><span>Previous</span></button>
                     </div>
                 </div>
-                <div className="col-12 col-sm-12 col-md-auto mr-auto ml-auto my-auto order-0">
-                    <div className="container-fluid">
-                        <div className="row text-center">
-                            <div className="col-6 col-sm-6 col-md-auto m-auto">
+                <div className="col-12 col-sm-12 col-md-auto mr-auto ml-auto my-auto order-0 px-md-0">
+                    <div className="container-fluid px-0">
+                        <div className="row text-center ml-n4 mr-n4 ml-md-1 mr-md-1 ">
+                            <div className="col-4 col-sm-4 col-md-5 pl-2">
                                 <select
-                                    style={{ padding: "5px" }}
-                                    className="form-control mb-2"
+                                   
+                                    className="form-control mb-2 px-1"
                                     onChange={pageSizeChange} >
 
                                     {props.pageInfo.pageSizeList.map((item, index) => {
@@ -155,14 +155,16 @@ function Pagination(props) {
                                             >{newItem}
                                             </option>
                                         )
-                                    }
-                                    )}
+                                    })}
                                 </select>
                             </div>
-                            <div className="col-6 col-sm-6 col-md-auto m-auto">
+                            <div className="col-2 col-sm-2 col-md-1 mt-2 ">
+                                <span className="mb-3 mr-n5 mr-md-1">Page</span>
+                            </div>
+                            <div className="col-4 col-sm-4 col-md-auto  ml-md-3  pl-3 pr-2 mr-md-2 ">
                                 <select
                                     value={props.pageInfo.currentPage}
-                                    className="form-control mb-2"
+                                    className="form-control mb-2 "
                                     onChange={({ currentTarget }) => pageChange(currentTarget.value)} >
                                     {props.pageInfo.pages.map((item, index) => {
                                         let newItem = item < 10 ? `0${item}` : `${item}`;
@@ -173,9 +175,11 @@ function Pagination(props) {
                                             >{newItem}
                                             </option>
                                         )
-                                    }
-                                    )}
+                                    })}
                                 </select>
+                            </div>
+                            <div className="col-2 col-sm-2 col-md-auto  pr-0 mt-2 ml-n4 ">
+                                <span className="mb-3 ">of {props.pageInfo.pagesCount < 10000 ? props.pageInfo.pagesCount : 9999 + '+'}</span>
                             </div>
                         </div>
                     </div>

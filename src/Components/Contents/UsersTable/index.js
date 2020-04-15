@@ -73,11 +73,13 @@ let Users = (props) => {
     return (
         <div className="row justify-content-center mt-5">
             <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12">
-                <div className="container custom_form mt-5">
+                {/* after pagination bottom padding if need then remove pb-0 */}
+                <div className="container custom_form mt-5 pb-0">
                     <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">All Users</div>
-                    <div className="row  mt-0 mr-n4 ml-n4">
+                    <div className="row  mt-0 mb-0 mr-n4 ml-n4">
                         <div className="col-12">
-                            <div className="m-2">
+                            {/* after pagination bottom mrgin if need mb-2 */}
+                            <div className=" mt-2 ml-2 mr-2">
                                 <div className="container-fluid border ">
                                     <div className="row text-center font-weight-bold border-bottom">
                                         <div className="col">

@@ -124,7 +124,8 @@ function Pagination(props) {
         let { pageInfo } = props
         let newPageSize = input.value;
         let { currentPage, pageSize, totalPages, pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, newPageSize, pageInfo.paginationList);
-        let allPages = _.range(1, pageInfo.pagesCount + 1);
+        currentPage= currentPage > totalPages ? totalPages: currentPage
+        let allPages = _.range(1, totalPages + 1);
         props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, currentPage, pageSize });
     }
 

@@ -24,8 +24,8 @@ function Pagination(props) {
                 }
                 paginationList = newPaginationList;
             }
-            let isPrevious = pageInfo.currentPage === 1 ? "disabled" : "";
-            let isNext = pageInfo.currentPage === pagesCount ? "disabled" : "";
+            let isPrevious =  Number(pageInfo.currentPage) == 1 ? "disabled" : "";
+            let isNext = Number(pageInfo.currentPage) == pagesCount ? "disabled" : "";
             props.setPageInfo({ ...pageInfo, pagesCount, pages, paginationList, isPrevious, isNext });
 
         }, [props.pageInfo.totalCount]

@@ -2,36 +2,25 @@ import React, { useEffect } from 'react';
 import _ from 'lodash';
 
 function Pagination(props) {
+    //pagination dropdown finlly completed with List pagination
 
     useEffect(
         () => {
             let { pageInfo } = props;
             let pagesCount = Math.ceil(pageInfo.totalCount / pageInfo.pageSize);
-            let pages = _.range(1, pagesCount + 1);
-
             let allPages = createPageList(pageInfo.currentPage, pagesCount);
-            // let allPages =createPageList( pageInfo.currentPage, 300);
-            let paginationList = [...pageInfo.paginationList];
-
-            if (pages.length < paginationList.length) {
-                paginationList = pages
-            } else {
-                let newPaginationList = [];
-                for (let i = 0; i < paginationList.length; i++) {
-                    let element = pages[i];
-                    newPaginationList.push(element);
-                }
-                paginationList = newPaginationList;
-            }
             let isPrevious = Number(pageInfo.currentPage) == 1 ? "disabled" : "";
             let isNext = Number(pageInfo.currentPage) == pagesCount ? "disabled" : "";
-            props.setPageInfo({ ...pageInfo, pagesCount, pages: allPages, paginationList, isPrevious, isNext });
+            let { pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, pageInfo.pageSize, pageInfo.paginationList);
 
+            let paginationPages = pageInfo.paginationType === "dropdown" ? allPages : pages;
+            props.setPageInfo({ ...pageInfo, pagesCount, pages: paginationPages, isPrevious, isNext });
         }, [props.pageInfo.totalCount]
     );
 
 
     const getPager = (totalItems, currentPage, pageSize, paginationList) => {
+        console.log("currentPage", currentPage);
         let middleCeilIndex = Math.ceil(paginationList.length / 2);
         let middleFloorIndex = Math.floor(paginationList.length / 2);
         let remainingMeddleIndex = paginationList.length - middleCeilIndex;
@@ -46,12 +35,13 @@ function Pagination(props) {
             if (currentPage <= middleCeilIndex) {
                 startPage = 1;
                 endPage = paginationList.length;
-            } else if (currentPage + remainingMeddleIndex >= totalPages) {
-                startPage = totalPages - (paginationList.length - 1);
+            } else if (Number(currentPage) + Number(remainingMeddleIndex) <= totalPages) {
+                startPage = currentPage - remainingMeddleIndex;
+                endPage = Number(currentPage) + Number(remainingMeddleIndex) - 1;
+            } else if (Number(currentPage) + Number(remainingMeddleIndex) > totalPages && currentPage <= totalPages) {
+                let remaining = totalPages - currentPage;
+                startPage = Number(currentPage - middleFloorIndex) + Number(remaining) - 1;
                 endPage = totalPages;
-            } else {
-                startPage = currentPage - middleFloorIndex;
-                endPage = currentPage + middleFloorIndex - 1;
             }
         }
         var startIndex = (currentPage - 1) * pageSize;
@@ -97,9 +87,6 @@ function Pagination(props) {
             let remainingDecrement = _.range(currentPage - remainingDecrementTotal - total, currentPage);
             newIncrementDecrement = [...remainingDecrement, ...increment];
         }
-        // else if(currentPage === pageCount){
-        //     decrement = _.range(currentPage - decrementTo + 1, currentPage+1);
-        // }
         else {
             newIncrementDecrement = [...incrementDecrement];
         }
@@ -111,22 +98,21 @@ function Pagination(props) {
         let { pageInfo } = props
         let { currentPage, totalPages, pages } = getPager(pageInfo.totalCount, newCurrentPage, pageInfo.pageSize, pageInfo.paginationList);
         currentPage = Number(currentPage)
-        // let allPages = _.range(1, pageInfo.pagesCount + 1);
-        //let allPages =createPageList(newCurrentPage, 300);
         let allPages = createPageList(newCurrentPage, pageInfo.pagesCount);
         let isPrevious = currentPage === 1 ? "disabled" : "";
         let isNext = currentPage === totalPages ? "disabled" : "";
-
-        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, isPrevious, isNext, currentPage });
+        let paginationPages = pageInfo.paginationType === "dropdown" ? allPages : pages;
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: paginationPages, isPrevious, isNext, currentPage });
     }
 
     const pageSizeChange = ({ currentTarget: input }) => {
         let { pageInfo } = props
         let newPageSize = input.value;
         let { currentPage, pageSize, totalPages, pages } = getPager(pageInfo.totalCount, pageInfo.currentPage, newPageSize, pageInfo.paginationList);
-        currentPage= currentPage > totalPages ? totalPages: currentPage
+        currentPage = currentPage > totalPages ? totalPages : currentPage;
         let allPages = _.range(1, totalPages + 1);
-        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: allPages, paginationList: pages, currentPage, pageSize });
+        let paginationPages = pageInfo.paginationType === "dropdown" ? allPages : pages;
+        props.setPageInfo({ ...pageInfo, pagesCount: totalPages, pages: paginationPages, currentPage, pageSize });
     }
 
     return (
@@ -143,7 +129,6 @@ function Pagination(props) {
                         <div className="row text-center ml-n4 mr-n4 ml-md-1 mr-md-1 ">
                             <div className="col-4 col-sm-4 col-md-5 pl-2">
                                 <select
-                                   
                                     className="form-control mb-2 px-1"
                                     onChange={pageSizeChange} >
 

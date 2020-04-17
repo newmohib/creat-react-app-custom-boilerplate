@@ -5,7 +5,7 @@ import { Pagination } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50] });
+    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50],paginationType:"dropdown" }); // dropdown / list
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
 
     let viewDetails = (index) => {
@@ -18,32 +18,32 @@ let Users = (props) => {
 
     let getAllData = (fromDataIndex, toDataIndex) => {
         let dataList = [
-            { id: 1, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 2, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 3, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 4, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 5, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 6, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 7, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 8, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 9, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 10, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 11, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 1, firstName: "Mohib1", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 2, firstName: "Mohib2", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 3, firstName: "Mohib3", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 4, firstName: "Mohib4", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 5, firstName: "Mohib5", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 6, firstName: "Mohib6", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 7, firstName: "Mohib7", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 8, firstName: "Mohib8", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 9, firstName: "Mohib9", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 10, firstName: "Mohib10", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 11, firstName: "Mohib11", lastName: "Rahman", email: "mohib@gmail.com" },
             { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 13, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 14, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 15, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 16, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 17, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 18, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 19, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 20, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 21, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 22, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 23, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 24, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 25, firstName: "Mohib", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 26, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 13, firstName: "Mohib13", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 14, firstName: "Mohib14", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 15, firstName: "Mohib15", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 16, firstName: "Mohib16", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 17, firstName: "Mohib17", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 18, firstName: "Mohib18", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 19, firstName: "Mohib19", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 20, firstName: "Mohib20", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 21, firstName: "Mohib21", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 22, firstName: "Mohib22", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 23, firstName: "Mohib23", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 24, firstName: "Mohib24", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 25, firstName: "Mohib25", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 26, firstName: "Mohib26", lastName: "Rahman", email: "mohib@gmail.com" },
         ];
         let newDataList = dataList.slice(fromDataIndex, toDataIndex)
         let responseData = { dataList: newDataList, totalCount: dataList.length }

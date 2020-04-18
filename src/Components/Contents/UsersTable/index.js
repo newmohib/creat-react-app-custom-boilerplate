@@ -77,112 +77,115 @@ let Users = (props) => {
 
     return (
         <div className="row justify-content-center mt-5">
-            <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12">
-                <div className="container custom_form mt-5">
-                    <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">All Users</div>
-                    <div className="row  mt-0 mr-n4 ml-n4">
-                        <div className="col-12">
-                            <div className="m-2">
-                                <div className="container-fluid border ">
-                                    <div className="row text-center font-weight-bold border-bottom">
-                                        <div className="col">
-                                            <div className="border-right">
-                                                <div className=" p-2">
-                                                    ID
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="border-right">
-                                                <div className=" p-2">
-                                                    First Name
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="border-right">
-                                                <div className=" p-2">
-                                                    Last Name
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="border-right">
-                                                <div className=" p-2">
-                                                    Email
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="">
-                                                <div className=" p-2">
-                                                    Action
-                                                </div>
+        <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12">
+            {/* after pagination bottom padding if need then remove pb-0 */}
+            <div className="container custom_form mt-5 ">
+                <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">All Users</div>
+                <div className="row  mt-0 mb-0 mr-n4 ml-n4" >
+                    <div className="col-12" >
+                        {/* after pagination bottom mrgin if need mb-2 */}
+                        <div className=" mt-2 ml-2 mr-2" >
+                        {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
+                            <div className="container-fluid border overflow-auto" >
+                                <div className="row text-center font-weight-bold border-bottom min_width_1000">
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                ID
                                             </div>
                                         </div>
                                     </div>
-                                    {
-                                        data.dataList.map((item, index) => {
-                                            let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
-                                            return (
-                                                <div key={index} >
-                                                    <div className={`row text-center  ${borderClass}`}>
-                                                        <div className="col">
-                                                            <div className="border-right">
-                                                                <div className=" p-2">
-                                                                    {item.id}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col">
-                                                            <div className="border-right">
-                                                                <div className=" p-2">
-                                                                    {item.firstName}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col">
-                                                            <div className="border-right">
-                                                                <div className=" p-2">
-                                                                    {item.lastName}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col">
-                                                            <div className="border-right">
-                                                                <div className=" p-2">
-                                                                    {item.email}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col">
-                                                            <div className="">
-                                                                <div className="p-1">
-                                                                    <button onClick={() => viewDetails(index)} type="button" className="btn btn-primary btn-sm">More Options</button>
-                                                                </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                First Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                Last Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="border-right">
+                                            <div className=" p-2">
+                                                Email
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="">
+                                            <div className=" p-2">
+                                                Action
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {
+                                    data.dataList.map((item, index) => {
+                                        let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
+                                        return (
+                                            <div key={index} >
+                                                <div className={`row text-center  ${borderClass} min_width_1000`}>
+                                                    <div className="col">
+                                                        <div className="border-right">
+                                                            <div className=" p-2">
+                                                                {item.id}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {
-                                                        isDesplay === index &&
-                                                        <div className={`row border-bottom`}>
-                                                            <div className="col">
-                                                                Test
+                                                    <div className="col">
+                                                        <div className="border-right">
+                                                            <div className=" p-2">
+                                                                {item.firstName}
                                                             </div>
                                                         </div>
-                                                    }
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="border-right">
+                                                            <div className=" p-2">
+                                                                {item.lastName}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="border-right">
+                                                            <div className=" p-2">
+                                                                {item.email}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="">
+                                                            <div className="p-1">
+                                                                <button onClick={() => viewDetails(index)} type="button" className="btn btn-primary btn-sm">More Options</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+                                                {
+                                                    isDesplay === index &&
+                                                    <div className={`row border-bottom`}>
+                                                        <div className="col">
+                                                            Test
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
+                            <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     );
 }
 const mapStateToProps = state => ({

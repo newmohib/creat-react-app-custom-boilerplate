@@ -80,3 +80,6 @@ a:hover{
     text-decoration: none !important;
 }
 
+.min_width_1000{
+  min-width: 1000px;
+}

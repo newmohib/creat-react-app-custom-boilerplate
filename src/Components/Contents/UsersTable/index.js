@@ -76,12 +76,13 @@ let Users = (props) => {
                 {/* after pagination bottom padding if need then remove pb-0 */}
                 <div className="container custom_form mt-5 pb-0">
                     <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">All Users</div>
-                    <div className="row  mt-0 mb-0 mr-n4 ml-n4">
-                        <div className="col-12">
+                    <div className="row  mt-0 mb-0 mr-n4 ml-n4" >
+                        <div className="col-12" >
                             {/* after pagination bottom mrgin if need mb-2 */}
-                            <div className=" mt-2 ml-2 mr-2">
-                                <div className="container-fluid border ">
-                                    <div className="row text-center font-weight-bold border-bottom">
+                            <div className=" mt-2 ml-2 mr-2" >
+                            {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
+                                <div className="container-fluid border overflow-auto" >
+                                    <div className="row text-center font-weight-bold border-bottom min_width_1000">
                                         <div className="col">
                                             <div className="border-right">
                                                 <div className=" p-2">
@@ -123,7 +124,7 @@ let Users = (props) => {
                                             let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
                                             return (
                                                 <div key={index} >
-                                                    <div className={`row text-center  ${borderClass}`}>
+                                                    <div className={`row text-center  ${borderClass} min_width_1000`}>
                                                         <div className="col">
                                                             <div className="border-right">
                                                                 <div className=" p-2">

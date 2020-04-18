@@ -42,3 +42,7 @@ body > .container {
 a:hover{
     cursor: pointer;
 }
+
+.min_width_1000{
+  min-width: 1000px;
+}

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { Pagination } from '../index'
+import { Pagination, Filter } from '../index'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50],paginationType:"dropdown" }); // dropdown / list
+    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50], paginationType: "dropdown" }); // dropdown / list
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
+    let [filterInfo, setFilterInfo] = useState({ id: "", firstName: "", email: "", country: "allCountry" });
 
     let viewDetails = (index) => {
         if (isDesplay === index) {
@@ -17,36 +18,79 @@ let Users = (props) => {
     };
 
     let getAllData = (fromDataIndex, toDataIndex) => {
+        //here start server side paginatin with filter then get the data
         let dataList = [
-            { id: 1, firstName: "Mohib1", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 2, firstName: "Mohib2", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 3, firstName: "Mohib3", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 4, firstName: "Mohib4", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 5, firstName: "Mohib5", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 6, firstName: "Mohib6", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 7, firstName: "Mohib7", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 8, firstName: "Mohib8", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 9, firstName: "Mohib9", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 10, firstName: "Mohib10", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 11, firstName: "Mohib11", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 13, firstName: "Mohib13", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 14, firstName: "Mohib14", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 15, firstName: "Mohib15", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 16, firstName: "Mohib16", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 17, firstName: "Mohib17", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 18, firstName: "Mohib18", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 19, firstName: "Mohib19", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 20, firstName: "Mohib20", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 21, firstName: "Mohib21", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 22, firstName: "Mohib22", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 23, firstName: "Mohib23", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 24, firstName: "Mohib24", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 25, firstName: "Mohib25", lastName: "Rahman", email: "mohib@gmail.com" },
-            { id: 26, firstName: "Mohib26", lastName: "Rahman", email: "mohib@gmail.com" },
+            { id: 1, firstName: "Mohib1", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 2, firstName: "Mohib2", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 3, firstName: "Mohib3", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 4, firstName: "Mohib4", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 5, firstName: "Mohib5", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 6, firstName: "Mohib6", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 7, firstName: "Mohib7", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 8, firstName: "Mohib8", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 9, firstName: "Mohib9", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
+            { id: 10, firstName: "Mohib10", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
+            { id: 11, firstName: "Mohib11", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
+            { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
+            { id: 13, firstName: "Mohib13", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
+            { id: 14, firstName: "Mohib14", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
+            { id: 15, firstName: "Mohib15", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
+            { id: 16, firstName: "Mohib16", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
+            { id: 17, firstName: "Mohib17", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
+            { id: 18, firstName: "Mohib18", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
+            { id: 19, firstName: "Mohib19", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
+            { id: 20, firstName: "Mohib20", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
+            { id: 21, firstName: "Mohib21", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
+            { id: 22, firstName: "Mohib22", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
+            { id: 23, firstName: "Mohib23", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
+            { id: 24, firstName: "Mohib24", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
+            { id: 25, firstName: "Mohib25", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
+            { id: 26, firstName: "Mohib26", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
         ];
-        let newDataList = dataList.slice(fromDataIndex, toDataIndex)
-        let responseData = { dataList: newDataList, totalCount: dataList.length }
+        //optional : there is client site filter
+
+        var newData = dataList.filter((item) => {
+            if (filterInfo.id !== "" || filterInfo.firstName !== "" || filterInfo.email !== "" || filterInfo.country !== "allCountry") {
+
+                let isId = item.id == filterInfo.id ? true : false;
+                let isFirstName = filterInfo.firstName !== "" ? item.firstName.toLowerCase().includes(filterInfo.firstName.toLowerCase()) : false;
+                let isEmail = filterInfo.email !== "" ? item.email.toLowerCase().includes(filterInfo.email.toLowerCase()) : false;
+                let isCountry = filterInfo.country !== "allCountry" ? item.country.toLowerCase().includes(filterInfo.country.toLowerCase()) : false;
+
+                console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry, typeof item.id, typeof filterInfo.id);
+
+
+                if (isId) {
+                    console.log("item", item);
+                    return item
+                }
+                if (!isId) {
+                    if (filterInfo.email !== "" && filterInfo.country !== "allCountry" && filterInfo.firstName !== "" && isEmail && isCountry && isFirstName) {
+                        return item
+                    } else if (filterInfo.email == "" && filterInfo.country !== "allCountry" && filterInfo.firstName !== "" && isCountry && isFirstName) {
+                        return item
+                    } else if (filterInfo.email !== "" && filterInfo.country !== "allCountry" && filterInfo.firstName == "" && isCountry && isEmail) {
+                        return item
+                    } else if (filterInfo.email !== "" && filterInfo.country == "allCountry" && filterInfo.firstName !== "" && isFirstName && isEmail) {
+                        return item
+                    }
+                    else if (filterInfo.email == "" && filterInfo.country == "allCountry" && filterInfo.firstName !== "" && isFirstName) {
+                        return item
+                    } else if (filterInfo.email !== "" && filterInfo.country == "allCountry" && filterInfo.firstName == "" && isEmail) {
+                        return item
+                    } else if (filterInfo.email == "" && filterInfo.country !== "allCountry" && filterInfo.firstName == "" && isCountry) {
+                        return item
+                    }
+                }
+            } else {
+                return item
+            }
+        })
+        console.log("newData", newData);
+
+
+        let newDataList = newData.slice(fromDataIndex, toDataIndex)
+        let responseData = { dataList: newDataList, totalCount: newData.length }
         return responseData;
     }
 
@@ -67,7 +111,7 @@ let Users = (props) => {
             setData({ dataList: dataList, fromDataIndex, toDataIndex })
             setPageInfo({ ...pageInfo, totalCount });
             setIsDesplay(null);
-        }, [pageInfo.currentPage, pageInfo.pageSize]
+        }, [pageInfo.currentPage, pageInfo.pageSize, filterInfo.country, filterInfo.firstName, filterInfo.id, filterInfo.email]
     );
 
     return (
@@ -80,9 +124,10 @@ let Users = (props) => {
                         <div className="col-12" >
                             {/* after pagination bottom mrgin if need mb-2 */}
                             <div className=" mt-2 ml-2 mr-2" >
-                            {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
+                                {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
                                 <div className="container-fluid border overflow-auto" >
-                                    <div className="row text-center font-weight-bold border-bottom min_width_1000">
+                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
+                                    <div className="row text-center font-weight-bold border-top border-bottom min_width_1000">
                                         <div className="col">
                                             <div className="border-right">
                                                 <div className=" p-2">
@@ -100,14 +145,14 @@ let Users = (props) => {
                                         <div className="col">
                                             <div className="border-right">
                                                 <div className=" p-2">
-                                                    Last Name
+                                                    Email
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col">
                                             <div className="border-right">
                                                 <div className=" p-2">
-                                                    Email
+                                                    Country
                                                 </div>
                                             </div>
                                         </div>
@@ -142,14 +187,14 @@ let Users = (props) => {
                                                         <div className="col">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
-                                                                    {item.lastName}
+                                                                    {item.email}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div className="col">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
-                                                                    {item.email}
+                                                                    {item.country}
                                                                 </div>
                                                             </div>
                                                         </div>

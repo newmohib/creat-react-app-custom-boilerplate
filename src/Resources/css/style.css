@@ -83,3 +83,38 @@ a:hover{
 .min_width_1000{
   min-width: 1000px;
 }
+.min_width_900{
+  min-width: 900px;
+}
+
+/* child table */
+.table_value_pre::before{
+  content: ':';
+  position: absolute;
+  left: 0;
+}
+
+.child_table_background{
+  background-color: hsla(0,0%,87.1%,.12);
+  
+}
+
+
+.info-table__tr {
+  position: relative;
+  word-break: break-word;
+}
+.info-table__tr:after {
+  content: "";
+  height: 100%;
+  width: 1px;
+  background: #ddd;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.info-table__tr > div:not(:first-child) {
+  padding-left: 1.875rem;
+}
+

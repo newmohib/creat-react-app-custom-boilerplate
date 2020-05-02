@@ -4,6 +4,7 @@ import Header from './Components/headerFooter/header';
 import Footer from './Components/headerFooter/footer';
 import HomeRouter from './Routers/homeRouter';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import './Resources/css/style.css';
 
 function App() {

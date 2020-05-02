@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { Pagination, Filter } from '../index'
+import ChieldUserTable from './chieldTable'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
     let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50], paginationType: "dropdown" }); // dropdown / list
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
     let [filterInfo, setFilterInfo] = useState({ id: "", firstName: "", email: "", country: "allCountry" });
+    let [chieldData,setChieldData]= useState({});
 
-    let viewDetails = (index) => {
+    let viewDetails = (index ,item) => {
         if (isDesplay === index) {
             setIsDesplay(null);
+            setChieldData({})
         } else {
             setIsDesplay(index);
+            setChieldData(item)
         }
     };
 
@@ -58,7 +62,6 @@ let Users = (props) => {
                 let isCountry = filterInfo.country !== "allCountry" ? item.country.toLowerCase().includes(filterInfo.country.toLowerCase()) : false;
 
                 console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry, typeof item.id, typeof filterInfo.id);
-
 
                 if (isId) {
                     console.log("item", item);
@@ -201,18 +204,14 @@ let Users = (props) => {
                                                         <div className="col">
                                                             <div className="">
                                                                 <div className="p-1">
-                                                                    <button onClick={() => viewDetails(index)} type="button" className="btn btn-primary btn-sm">More Options</button>
+                                                                    <button onClick={() => viewDetails(index,item)} type="button" className="btn btn-primary btn-sm">More Options</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     {
                                                         isDesplay === index &&
-                                                        <div className={`row border-bottom`}>
-                                                            <div className="col">
-                                                                Test
-                                                            </div>
-                                                        </div>
+                                                        <ChieldUserTable data={chieldData} />
                                                     }
                                                 </div>
                                             )

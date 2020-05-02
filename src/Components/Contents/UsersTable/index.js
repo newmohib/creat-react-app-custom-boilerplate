@@ -91,9 +91,8 @@ let Users = (props) => {
         })
         console.log("newData", newData);
 
-
         let newDataList = newData.slice(fromDataIndex, toDataIndex)
-        let responseData = { dataList: newDataList, totalCount: newData.length }
+        let responseData = { dataList: newDataList, totalCount: newData.length };
         return responseData;
     }
 
@@ -167,7 +166,7 @@ let Users = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
+                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} pageInfo={pageInfo} setPageInfo={setPageInfo} />
                                     {
                                         data.dataList.map((item, index) => {
                                             let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""

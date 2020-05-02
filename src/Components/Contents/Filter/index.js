@@ -16,7 +16,7 @@ function Filter(props) {
         // sort Number
         // filterInfo.sort((a,b)=> a.id -b.id);
         let {name,value}=item;
-        let filterInfo={...props.filterInfo}
+        let {filterInfo,pageInfo}=props
         console.log(name,":",value);
         props.setFilterInfo({...filterInfo,[name]:value});
         props.setPageInfo({...pageInfo ,currentPage:1})

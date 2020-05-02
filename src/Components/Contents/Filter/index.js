@@ -24,7 +24,7 @@ function Filter(props) {
 
     return (
 
-        <div className="row text-center  min_width_1000 ">
+        <div className="row text-center  min_width_1000 border-bottom">
             <div className="col pl-0">
                 <div className="">
                     <div className=" p-2">

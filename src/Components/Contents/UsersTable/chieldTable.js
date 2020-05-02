@@ -7,11 +7,11 @@ let ChieldUserTable = (props) => {
     console.log("data", props.data);
     let { data } = props
     return (
-        <div className='row border-bottom pt-2  bg-light' >
-            <div className="col ">
-                <div className="container-fluid min_width_900">
-                    <div className="row">
-                        <div className="col pl-4">
+        <div className='row  bg-light ' >
+            <div className="col bg-light px-0">
+                <div className="container-fluid min_width_1000   bg-light ">
+                    <div className="row ">
+                        <div className="col pt-2">
                             <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li className="nav-item">
                                     <a className="nav-link active" id="pills-view-tab" data-toggle="pill" href="#pills-view" role="tab" aria-controls="pills-view" aria-selected="true">View</a>
@@ -26,11 +26,11 @@ let ChieldUserTable = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="tab-content ml-3" id="pills-tabContent">
+                <div className="tab-content" id="pills-tabContent">
                     <div className="tab-pane fade show active" id="pills-view" role="tabpanel" aria-labelledby="pills-view-tab">
-                        <div className="container-fluid min_width_900">
+                        <div className="container-fluid min_width_1000 border-bottom   bg-light">
 
-                            <div className="row info-table__tr mb-2 ">
+                            <div className="row info-table__tr ">
                                 <div className="col-6">
                                     <div className="row">
                                         <div className="col-4 font-weight-bold">
@@ -52,7 +52,7 @@ let ChieldUserTable = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row info-table__tr mb-2 ">
+                            <div className="row info-table__tr ">
                                 <div className="col-6">
                                     <div className="row">
                                         <div className="col-4 font-weight-bold">
@@ -78,7 +78,7 @@ let ChieldUserTable = (props) => {
                         </div>
                     </div>
                     <div className="tab-pane fade" id="pills-update" role="tabpanel" aria-labelledby="pills-update-tab">
-                        <div className="container-fluid mb-2">
+                        <div className="container-fluid pb-2  min_width_1000 border-bottom   bg-light">
                             <div className="row">
                                 <div className="col text-center">
                                     Update
@@ -87,7 +87,7 @@ let ChieldUserTable = (props) => {
                         </div>
                     </div>
                     <div className="tab-pane fade" id="pills-delete" role="tabpanel" aria-labelledby="pills-delete-tab">
-                        <div className="container-fluid mb-2">
+                        <div className="container-fluid pb-2 min_width_1000 border-bottom   bg-light">
                             <div className="row">
                                 <div className="col text-center">
                                     Delete

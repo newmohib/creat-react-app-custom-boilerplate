@@ -129,7 +129,7 @@ let Users = (props) => {
                             <div className=" mt-2 ml-2 mr-2" >
                                 {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
                                 <div className="container-fluid border overflow-auto" >
-                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
+                                    
                                     <div className="row text-center font-weight-bold border-top border-bottom min_width_1000">
                                         <div className="col">
                                             <div className="border-right">
@@ -167,6 +167,7 @@ let Users = (props) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} />
                                     {
                                         data.dataList.map((item, index) => {
                                             let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""

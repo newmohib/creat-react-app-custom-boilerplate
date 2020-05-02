@@ -83,9 +83,7 @@ a:hover{
 .min_width_1000{
   min-width: 1000px;
 }
-.min_width_900{
-  min-width: 900px;
-}
+
 
 /* child table */
 .table_value_pre::before{

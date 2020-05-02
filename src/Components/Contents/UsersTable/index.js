@@ -121,7 +121,7 @@ let Users = (props) => {
             <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12">
                 {/* after pagination bottom padding if need then remove pb-0 */}
                 <div className="container custom_form mt-5 pb-0">
-                    <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">All Users</div>
+                    <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">User Management</div>
                     <div className="row  mt-0 mb-0 mr-n4 ml-n4" >
                         <div className="col-12" >
                             {/* after pagination bottom mrgin if need mb-2 */}

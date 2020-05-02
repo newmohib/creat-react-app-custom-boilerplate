@@ -19,6 +19,7 @@ function Filter(props) {
         let filterInfo={...props.filterInfo}
         console.log(name,":",value);
         props.setFilterInfo({...filterInfo,[name]:value});
+        props.setPageInfo({...pageInfo ,currentPage:1})
     }
 
 

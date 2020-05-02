@@ -129,7 +129,7 @@ let Users = (props) => {
                                 {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
                                 <div className="container-fluid border overflow-auto" >
                                     
-                                    <div className="row text-center font-weight-bold border-top border-bottom min_width_1000">
+                                    <div className="row text-center font-weight-bold  border-bottom min_width_1000">
                                         <div className="col">
                                             <div className="border-right">
                                                 <div className=" p-2">

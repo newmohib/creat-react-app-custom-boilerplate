@@ -8,10 +8,10 @@ let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
     let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50], paginationType: "dropdown" }); // dropdown / list
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
-    let [filterInfo, setFilterInfo] = useState({ id: "", firstName: "", email: "", country: "allCountry" });
-    let [chieldData,setChieldData]= useState({});
+    let [filterInfo, setFilterInfo] = useState({ search: "", id: "", firstName: "", email: "", country: "allCountry" });
+    let [chieldData, setChieldData] = useState({});
 
-    let viewDetails = (index ,item) => {
+    let viewDetails = (index, item) => {
         if (isDesplay === index) {
             setIsDesplay(null);
             setChieldData({})
@@ -54,36 +54,20 @@ let Users = (props) => {
         //optional : there is client site filter
 
         var newData = dataList.filter((item) => {
-            if (filterInfo.id !== "" || filterInfo.firstName !== "" || filterInfo.email !== "" || filterInfo.country !== "allCountry") {
-
-                let isId = item.id == filterInfo.id ? true : false;
-                let isFirstName = filterInfo.firstName !== "" ? item.firstName.toLowerCase().includes(filterInfo.firstName.toLowerCase()) : false;
-                let isEmail = filterInfo.email !== "" ? item.email.toLowerCase().includes(filterInfo.email.toLowerCase()) : false;
-                let isCountry = filterInfo.country !== "allCountry" ? item.country.toLowerCase().includes(filterInfo.country.toLowerCase()) : false;
-
-                console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry, typeof item.id, typeof filterInfo.id);
-
+            if (filterInfo.search !== "") {
+                let isId = String(item.id).includes(String(filterInfo.search));
+                let isFirstName = item.firstName.toLowerCase().includes(filterInfo.search.toLowerCase());
+                let isEmail = item.email.toLowerCase().includes(filterInfo.search.toLowerCase());
+                let isCountry = item.country.toLowerCase().includes(filterInfo.search.toLowerCase());
+                console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry);
                 if (isId) {
-                    console.log("item", item);
                     return item
-                }
-                if (!isId) {
-                    if (filterInfo.email !== "" && filterInfo.country !== "allCountry" && filterInfo.firstName !== "" && isEmail && isCountry && isFirstName) {
-                        return item
-                    } else if (filterInfo.email == "" && filterInfo.country !== "allCountry" && filterInfo.firstName !== "" && isCountry && isFirstName) {
-                        return item
-                    } else if (filterInfo.email !== "" && filterInfo.country !== "allCountry" && filterInfo.firstName == "" && isCountry && isEmail) {
-                        return item
-                    } else if (filterInfo.email !== "" && filterInfo.country == "allCountry" && filterInfo.firstName !== "" && isFirstName && isEmail) {
-                        return item
-                    }
-                    else if (filterInfo.email == "" && filterInfo.country == "allCountry" && filterInfo.firstName !== "" && isFirstName) {
-                        return item
-                    } else if (filterInfo.email !== "" && filterInfo.country == "allCountry" && filterInfo.firstName == "" && isEmail) {
-                        return item
-                    } else if (filterInfo.email == "" && filterInfo.country !== "allCountry" && filterInfo.firstName == "" && isCountry) {
-                        return item
-                    }
+                } else if (isFirstName) {
+                    return item
+                } else if (isEmail) {
+                    return item
+                } else if (isCountry) {
+                    return item
                 }
             } else {
                 return item
@@ -113,22 +97,31 @@ let Users = (props) => {
             setData({ dataList: dataList, fromDataIndex, toDataIndex })
             setPageInfo({ ...pageInfo, totalCount });
             setIsDesplay(null);
-        }, [pageInfo.currentPage, pageInfo.pageSize, filterInfo.country, filterInfo.firstName, filterInfo.id, filterInfo.email]
+        }, [pageInfo.currentPage, pageInfo.pageSize, filterInfo.country, filterInfo.firstName, filterInfo.id, filterInfo.email,filterInfo.search]
     );
 
     return (
-        <div className="row justify-content-center mt-5">
-            <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12">
+        <div className="row justify-content-center mt-5 ">
+            <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12 ">
                 {/* after pagination bottom padding if need then remove pb-0 */}
                 <div className="container custom_form mt-5 pb-0">
-                    <div className="row  mt-0 mr-n4 ml-n4 justify-content-center h3">User Management</div>
+                    <div className="row ">
+                        <div className="col-12 col-md-auto mr-auto float-md-left h4 text-center ">
+                            <div>
+                                User Management
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-auto float-right">
+                            <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} pageInfo={pageInfo} setPageInfo={setPageInfo} />
+                        </div>
+                    </div>
                     <div className="row  mt-0 mb-0 mr-n4 ml-n4" >
                         <div className="col-12" >
                             {/* after pagination bottom mrgin if need mb-2 */}
                             <div className=" mt-2 ml-2 mr-2" >
                                 {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
                                 <div className="container-fluid border overflow-auto" >
-                                    
+
                                     <div className="row text-center font-weight-bold  border-bottom min_width_1000">
                                         <div className="col">
                                             <div className="border-right">
@@ -166,7 +159,7 @@ let Users = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Filter filterInfo={filterInfo} setFilterInfo={setFilterInfo} pageInfo={pageInfo} setPageInfo={setPageInfo} />
+
                                     {
                                         data.dataList.map((item, index) => {
                                             let borderClass = data.dataList.length - 1 !== index || index === isDesplay ? "border-bottom" : ""
@@ -204,7 +197,7 @@ let Users = (props) => {
                                                         <div className="col">
                                                             <div className="">
                                                                 <div className="p-1">
-                                                                    <button onClick={() => viewDetails(index,item)} type="button" className="btn btn-primary btn-sm">More Options</button>
+                                                                    <button onClick={() => viewDetails(index, item)} type="button" className="btn btn-primary btn-sm">More Options</button>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt,FaSearch } from "react-icons/fa";
 import { NavLink, useHistory } from 'react-router-dom';
 
 function Header() {

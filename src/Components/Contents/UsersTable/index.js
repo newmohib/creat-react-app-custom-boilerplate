@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { IoMdArrowDropdown,IoMdArrowDropup } from "react-icons/io";
+import _ from 'lodash';
 
 import { Pagination, Filter } from '../index'
 import ChieldUserTable from './chieldTable'
@@ -10,6 +12,7 @@ let Users = (props) => {
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
     let [filterInfo, setFilterInfo] = useState({ search: "", id: "", firstName: "", email: "", country: "allCountry" });
     let [chieldData, setChieldData] = useState({});
+    let [sortData, setSortData] = useState({ sortField: "", sort: "" });
 
     let viewDetails = (index, item) => {
         if (isDesplay === index) {
@@ -80,6 +83,24 @@ let Users = (props) => {
         return responseData;
     }
 
+    const changeOrderBy = (result) => {
+        console.log("changeOrderBy", result);
+        let sortBy = ""
+        let newData = []
+        if (sortData.sortField === "" || (result === sortData.sortField && sortData.sort === "ascending" || (result !== sortData.sortField))) {
+            var descendingOrder = _.sortBy(data.dataList, result).reverse();
+            newData = descendingOrder;
+            sortBy = "descending";
+        }
+        else if (result === sortData.sortField && sortData.sort === "descending") {
+            var ascendingOrder = _.sortBy(data.dataList, result);
+            newData = ascendingOrder;
+            sortBy = "ascending";
+        }
+        setSortData({ sort: sortBy, sortField: result });
+        setData({ ...data, dataList: newData });
+    };
+
     useEffect(
         () => {
             let fromDataIndex = data.fromDataIndex;
@@ -97,7 +118,7 @@ let Users = (props) => {
             setData({ dataList: dataList, fromDataIndex, toDataIndex })
             setPageInfo({ ...pageInfo, totalCount });
             setIsDesplay(null);
-        }, [pageInfo.currentPage, pageInfo.pageSize, filterInfo.country, filterInfo.firstName, filterInfo.id, filterInfo.email,filterInfo.search]
+        }, [pageInfo.currentPage, pageInfo.pageSize, filterInfo.country, filterInfo.firstName, filterInfo.id, filterInfo.email, filterInfo.search]
     );
 
     return (
@@ -105,8 +126,8 @@ let Users = (props) => {
             <div className="col-12 col-md-12 col-xl-12 col-lg-12 col-sm-12 ">
                 {/* after pagination bottom padding if need then remove pb-0 */}
                 <div className="container custom_form mt-5 pb-0">
-                    <div className="row ">
-                        <div className="col-12 col-md-auto mr-auto float-md-left h4 text-center ">
+                    <div className="row mt-2 mb-1">
+                        <div className="col-12 col-md-auto mr-auto float-md-left h4 text-center">
                             <div>
                                 User Management
                             </div>
@@ -121,39 +142,42 @@ let Users = (props) => {
                             <div className=" mt-2 ml-2 mr-2" >
                                 {/* overflow-auto for horizontel over flow with  min_width_1000  in row*/}
                                 <div className="container-fluid border overflow-auto" >
-
                                     <div className="row text-center font-weight-bold  border-bottom min_width_1000">
-                                        <div className="col">
+                                        <div className="col px-0 cursor_pointer" onClick={() => changeOrderBy("id")}>
                                             <div className="border-right">
-                                                <div className=" p-2">
+                                                <div className="py-2 pl-3 pr-0">
                                                     ID
+                                                     {sortData.sortField === "id" && sortData.sort ==="descending" ? <span><IoMdArrowDropup /></span>: <span ><IoMdArrowDropdown /></span> }
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col px-0 cursor_pointer" onClick={() => changeOrderBy("firstName")}>
                                             <div className="border-right">
-                                                <div className=" p-2">
+                                                <div className="py-2 pl-3 pr-0">
                                                     First Name
+                                                    {sortData.sortField === "firstName" && sortData.sort ==="descending" ? <span ><IoMdArrowDropup /></span>: <span ><IoMdArrowDropdown /></span> }
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col px-0 cursor_pointer" onClick={() => changeOrderBy("email")}>
                                             <div className="border-right">
-                                                <div className=" p-2">
+                                                <div className="py-2 pl-3 pr-0">
                                                     Email
+                                                    {sortData.sortField === "email" && sortData.sort ==="descending" ? <span ><IoMdArrowDropup /></span>: <span ><IoMdArrowDropdown /></span> }
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col px-0 cursor_pointer" onClick={() => changeOrderBy("country")}>
                                             <div className="border-right">
-                                                <div className=" p-2">
+                                                <div className="py-2 pl-3 pr-0">
                                                     Country
+                                                    {sortData.sortField === "country" && sortData.sort ==="descending" ? <span ><IoMdArrowDropup /></span>: <span ><IoMdArrowDropdown /></span> }
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col px-0" >
                                             <div className="">
-                                                <div className=" p-2">
+                                                <div className="p-2">
                                                     Action
                                                 </div>
                                             </div>
@@ -166,35 +190,35 @@ let Users = (props) => {
                                             return (
                                                 <div key={index} >
                                                     <div className={`row text-center  ${borderClass} min_width_1000`}>
-                                                        <div className="col">
+                                                        <div className="col px-0">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
                                                                     {item.id}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col">
+                                                        <div className="col px-0">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
                                                                     {item.firstName}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col">
+                                                        <div className="col px-0">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
                                                                     {item.email}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col">
+                                                        <div className="col px-0">
                                                             <div className="border-right">
                                                                 <div className=" p-2">
                                                                     {item.country}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="col">
+                                                        <div className="col px-0">
                                                             <div className="">
                                                                 <div className="p-1">
                                                                     <button onClick={() => viewDetails(index, item)} type="button" className="btn btn-primary btn-sm">More Options</button>

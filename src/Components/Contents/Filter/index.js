@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FaSignOutAlt, FaSearch } from "react-icons/fa";
+
 import _ from 'lodash';
 
 function Filter(props) {
@@ -27,7 +27,7 @@ function Filter(props) {
     return (
 
         <div className="">
-            <input placeholder="Search" id="search" name="search" type="text" className="form-control rounded-pill" onChange={({ currentTarget: input }) => onChangeValue({ name: input.name, value: input.value })} />
+            <input style={{height:"30px"}} placeholder="Search" id="search" name="search" type="text" className="form-control rounded-pill" onChange={({ currentTarget: input }) => onChangeValue({ name: input.name, value: input.value })} />
         </div>
     );
 }

@@ -8,7 +8,7 @@ import ChieldUserTable from './chieldTable'
 
 let Users = (props) => {
     let [isDesplay, setIsDesplay] = useState(null);
-    let [pageInfo, setPageInfo] = useState({ pageSize: 2, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [2, 10, 20, 30, 50], paginationType: "dropdown" }); // dropdown / list
+    let [pageInfo, setPageInfo] = useState({ pageSize: 10, totalCount: 0, currentPage: 1, pagesCount: 0, pages: [], paginationList: [1, 2, 3, 4, 5, 6], isPrevious: "", isNext: "", pageSizeList: [ 10, 20, 30, 50,99], paginationType: "dropdown" }); // dropdown / list
     let [data, setData] = useState({ dataList: [], fromDataIndex: 0, toDataIndex: pageInfo.pageSize });
     let [filterInfo, setFilterInfo] = useState({ search: "", id: "", firstName: "", email: "", country: "allCountry" });
     let [chieldData, setChieldData] = useState({});
@@ -26,34 +26,18 @@ let Users = (props) => {
 
     let getAllData = (fromDataIndex, toDataIndex) => {
         //here start server side paginatin with filter then get the data
-        let dataList = [
-            { id: 1, firstName: "Mohib1", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 2, firstName: "Mohib2", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 3, firstName: "Mohib3", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 4, firstName: "Mohib4", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 5, firstName: "Mohib5", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 6, firstName: "Mohib6", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 7, firstName: "Mohib7", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 8, firstName: "Mohib8", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 9, firstName: "Mohib9", lastName: "Rahman", email: "mohib@gmail.com", country: "Bangladesh" },
-            { id: 10, firstName: "Mohib10", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
-            { id: 11, firstName: "Mohib11", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
-            { id: 12, firstName: "Mohib12", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
-            { id: 13, firstName: "Mohib13", lastName: "Rahman", email: "mohib@gmail.com", country: "India" },
-            { id: 14, firstName: "Mohib14", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
-            { id: 15, firstName: "Mohib15", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
-            { id: 16, firstName: "Mohib16", lastName: "Rahman", email: "mohib@gmail.com", country: "Pakistan" },
-            { id: 17, firstName: "Mohib17", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
-            { id: 18, firstName: "Mohib18", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
-            { id: 19, firstName: "Mohib19", lastName: "Rahman", email: "mohib@gmail.com", country: "Germany" },
-            { id: 20, firstName: "Mohib20", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
-            { id: 21, firstName: "Mohib21", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
-            { id: 22, firstName: "Mohib22", lastName: "Rahman", email: "mohib@gmail.com", country: "Italy" },
-            { id: 23, firstName: "Mohib23", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
-            { id: 24, firstName: "Mohib24", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
-            { id: 25, firstName: "Mohib25", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
-            { id: 26, firstName: "Mohib26", lastName: "Rahman", email: "mohib@gmail.com", country: "France" },
-        ];
+        let countryList=["Bangladesh","India","Pakistan","Germany","Italy","France"]
+        let dataList = [];
+        
+        for (let i = 1; i < 300; i++) {
+            let obj={ }
+             obj.id= i;
+             obj.firstName= "Mohibur"+i;
+             obj.lastName= "Rahmna"+i;
+             obj.email= `mohib+${i}@gmail.com`;
+             obj.country= countryList[Math.floor(Math.random() * countryList.length)];
+             dataList.push(obj)  
+        }
         //optional : there is client site filter
 
         var newData = dataList.filter((item) => {

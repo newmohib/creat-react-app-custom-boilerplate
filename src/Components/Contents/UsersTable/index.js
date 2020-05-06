@@ -35,7 +35,7 @@ let Users = (props) => {
              obj.firstName= "Mohibur"+i;
              obj.lastName= "Rahmna"+i;
              obj.email= `mohib+${i}@gmail.com`;
-             obj.country= countryList[Math.floor(Math.random() * countryList.length)];
+             obj.country= _.sample(countryList);
              dataList.push(obj)  
         }
         //optional : there is client site filter

@@ -46,7 +46,7 @@ let Users = (props) => {
                 let isFirstName = item.firstName.toLowerCase().includes(filterInfo.search.toLowerCase());
                 let isEmail = item.email.toLowerCase().includes(filterInfo.search.toLowerCase());
                 let isCountry = item.country.toLowerCase().includes(filterInfo.search.toLowerCase());
-                console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry);
+                //console.log("isFirstName", isFirstName, "isEmail", isEmail, "isCountry", isCountry);
                 if (isId) {
                     return item
                 } else if (isFirstName) {
@@ -60,7 +60,6 @@ let Users = (props) => {
                 return item
             }
         })
-        console.log("newData", newData);
 
         let newDataList = newData.slice(fromDataIndex, toDataIndex)
         let responseData = { dataList: newDataList, totalCount: newData.length };

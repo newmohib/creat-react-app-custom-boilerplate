@@ -1,23 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
-import { handleChangeInput, handleSubmitSignin } from './service';
+import { handleChangeInput } from './service';
+import { httpSimpleRequest } from '../../../Utils/httpClient';
 
 let Signup = (props) => {
     let errorValue = { email: "", password: "", confPassword: "" };
-
     let formValue = props.signUpInfo;
     let handleChange = ({ currentTarget: input }) => {
         formValue = handleChangeInput(input, props);
     };
-
+    let fileSelectHandler = (event) => {
+        let value = event.target.files[0];
+        let name = event.target.name;
+        formValue = handleChangeInput({ name: name, value: value }, props);
+    }
     const handleSubmit = (element) => {
         element.preventDefault();
-        let signinSubmitArr = element.target;
-        handleSubmitSignin(signinSubmitArr, props);
+        let fd = new FormData();
+        let keys = Object.keys(formValue);
+        keys.map((item, index) => {
+            fd.append(item, formValue[item]);
+        })
+        // 'content-type':'application/json'
+        let httpRequest = {
+            method: "post",
+            url: "http://localhost:4000/users/upload-file",
+            data: fd,
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
+        httpSimpleRequest(httpRequest)
+            .then(response => {
+                console.log("response", response.data);
+            }).catch(error => {
+                console.log("error", error);
+            })
     }
     let historyObj = useHistory();
     let routChange = (value) => {
@@ -38,7 +61,9 @@ let Signup = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit}
+                                    encType="multipart/form-data"
+                                >
                                     <div className="row mx-2 justify-content-center font-weight-bold h3">Sign Up</div>
                                     <div className="row mx-2">
                                         {
@@ -52,7 +77,18 @@ let Signup = (props) => {
                                                 />
                                             })
                                         }
+                                        <div className="form-group col-md-12">
+                                            <div className="custom-file">
+                                                <input
+                                                    // multiple 
+                                                    onChange={fileSelectHandler} name="image" type="file" className="custom-file-input" id="image" />
+                                                <label className="custom-file-label" htmlFor="image">
+                                                    {formValue.image.name ? formValue.image.name : "Choose Image"}
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div className="row mx-2 justify-content-center font-weight-bold">
                                         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
                                     </div>

@@ -4,6 +4,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signinForm';
 import { handleSigninChange, handleSigninSubmit } from './action';
+import { httpSimpleRequest } from '../../../Utils/httpClient';
 
 let Signin = (props) => {
     let errorValue = { email: "", password: "" };
@@ -24,7 +25,22 @@ let Signin = (props) => {
             const name = signinSubmitArr[i].name;
             if (name !== "") { signinObj[name] = value; }
         };
-        props.handleSigninSubmit(signinObj);
+       // props.handleSigninSubmit(signinObj);
+        let httpRequest = {
+            method: "get",
+            url: "http://localhost:4000/users",
+            data: signinObj,
+            headers: {
+                'content-type':'application/json'
+            }
+        }
+
+        httpSimpleRequest(httpRequest)
+            .then(response => {
+                console.log("response", response.data);
+            }).catch(error => {
+                console.log("error", error);
+            })
     }
     let historyObj = useHistory();
     let routChange = (value) => {

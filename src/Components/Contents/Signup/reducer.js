@@ -1,6 +1,6 @@
 import { SIGNUP_INPUT, SIGNUP_SUBMIT } from './constant';
 
-let initialState = { email: "", password: "" ,confPassword:""};
+let initialState = { email: "", password: "" ,confPassword:"",image:{}};
 
 const reducer = (state = initialState, action) => {
     

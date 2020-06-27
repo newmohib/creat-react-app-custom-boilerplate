@@ -79,13 +79,13 @@ let Signin = (props) => {
                                         }
                                     </div>
                                     <div className="row mx-2 ">
-                                        <div className="col-auto mr-auto float-left">
+                                        <div className="col-8 col-md-auto float-left">
                                             <div>
-                                                <button onClick={() => routChange("/authe/signup")} className="btn btn-light "><span className="">Forgot Password</span></button>
+                                                <button onClick={() => routChange("/authe/signup")} className="btn btn-light btn-sm"><span className="">Forgot Password</span></button>
                                             </div>
                                         </div>
-                                        <div className="col-auto float-right">
-                                            <button type="submit" className="btn btn-primary btn-lg ">Submit</button>
+                                        <div className="col-4 col-md-auto float-right">
+                                            <button type="submit" className="btn btn-primary ">Submit</button>
                                         </div>
                                     </div>
                                 </form>

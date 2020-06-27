@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { TextInput } from '../../Form';
-import { formFieldName } from './signupForm';
+import { TextInput,Select,File } from '../../Form';
+import { formFieldName,formDropdown } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
 import { handleChangeInput } from './service';
 import { httpSimpleRequest } from '../../../Utils/httpClient';
@@ -48,8 +48,8 @@ let Signup = (props) => {
     }
     return (
         <div className="row justify-content-center mt-5">
-            <div className="col-12 col-md-8 col-xl-6 col-lg-6 col-sm-10">
-                <div className="container custom_form mt-5">
+            <div className="col-12 col-md-12 col-xl-10 col-lg-10 col-sm-10">
+                <div className="container custom_form mt-5 mb-5">
                     <div className="row mt-0 mr-n4 ml-n4">
                         <div className="col-12">
                             <div className="container">
@@ -68,16 +68,45 @@ let Signup = (props) => {
                                     <div className="row mx-2">
                                         {
                                             formFieldName.map((item, itemIndex) => {
-                                                return <TextInput
+                                                if (item.block) {
+                                                return <div className="col-12 font-weight-bold text-primary">{item.block}</div>
+                                                }
+
+                                                if (item.type === "text") {
+                                                    return <TextInput
+                                                        key={itemIndex}
+                                                        {...item}
+                                                        type={undefined}
+                                                    block={undefined}
+                                                        value={formValue[item.valueName]}
+                                                        error={errorValue[item.errorName]}
+                                                        onChange={handleChange}
+                                                    />
+                                                }else if(item.type === "select"){
+                                                    return <Select
                                                     key={itemIndex}
                                                     {...item}
+                                                    type={undefined}
+                                                    block={undefined}
                                                     value={formValue[item.valueName]}
+                                                    options={[{optionText:"Dhaka",optionValue:"Dhaka"},{optionText:"Cumilla",optionValue:"Cumilla"}]}
                                                     error={errorValue[item.errorName]}
                                                     onChange={handleChange}
                                                 />
+                                                }else if(item.type === "file"){
+                                                  return  <File
+                                                    key={itemIndex}
+                                                    {...item}
+                                                    type={undefined}
+                                                    block={undefined}
+                                                    value={formValue[item.valueName].name}
+                                                    onChange={fileSelectHandler}
+                                                    />
+
+                                                }
                                             })
                                         }
-                                        <div className="form-group col-md-12">
+                                        {/* <div className="form-group col-md-12">
                                             <div className="custom-file">
                                                 <input
                                                     // multiple 
@@ -86,11 +115,13 @@ let Signup = (props) => {
                                                     {formValue.image.name ? formValue.image.name : "Choose Image"}
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
-                                    <div className="row mx-2 justify-content-center font-weight-bold">
-                                        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                                    <div className="row mx-4 justify-content-center">
+                                        <div className="col-10 col-md-6">
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block">Submit</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

@@ -141,3 +141,7 @@ a:hover{
   z-index: 1002;
 }
 
+.is-valid{
+  border-color:#ced4da !important ;
+}
+

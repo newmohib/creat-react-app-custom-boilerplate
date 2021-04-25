@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
-import { handleChangeInput, handleSubmitSignin } from './service';
+import { handleChangeInput } from './service';
+import { httpSimpleRequest } from '../../../Utils/httpClient';
 
 let Signup = (props) => {
     let errorValue = { email: "", password: "", confPassword: "" };
-
     let formValue = props.signUpInfo;
     let handleChange = ({ currentTarget: input }) => {
         formValue = handleChangeInput(input, props);
@@ -95,6 +95,7 @@ let Signup = (props) => {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="row mx-2 justify-content-center font-weight-bold">
                                         <button type="submit" className="btn btn-primary btn-block mx-3">Sign Up</button>
                                     </div>

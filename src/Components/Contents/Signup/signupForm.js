@@ -42,6 +42,7 @@ let formFieldName =
             errorClass:"",
             valueName:"confPassword"
         }
+        
     ];
 
     export {formFieldName};

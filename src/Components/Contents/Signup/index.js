@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import { TextInput } from '../../Form';
 import { formFieldName } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
@@ -13,12 +14,43 @@ let Signup = (props) => {
     let handleChange = ({ currentTarget: input }) => {
         formValue = handleChangeInput(input, props);
     };
-
+    let fileSelectHandler = (event) => {
+        let value = event.target.files[0];
+        let name = event.target.name;
+        formValue = handleChangeInput({ name: name, value: value }, props);
+    }
+    const uploadProgress = (progressEvent) => {
+        console.log('Upload Progress ' + (progressEvent.loaded / progressEvent.total * 100) + '%');
+    }
     const handleSubmit = (element) => {
         element.preventDefault();
         let signinSubmitArr = element.target;
-        handleSubmitSignin(signinSubmitArr, props);
+        // handleSubmitSignin(signinSubmitArr, props);
+        console.log("signinSubmitArr", element.target.value);
+        let fd = new FormData();
+
+        let keys = Object.keys(formValue);
+        keys.map((item, index) => {
+            fd.append(item, formValue[item]);
+        })
+        // 'content-type':'application/json'
+        axios({
+            method: "post",
+            url: "http://localhost:4000/users",
+            data: fd,
+            onUploadProgress: uploadProgress,
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+
+        })
+            .then(response => {
+                console.log("response", response.data);
+            }).catch(error => {
+                console.log("error", error);
+            })
     }
+
     let historyObj = useHistory();
     let routChange = (value) => {
         historyObj.push(value)
@@ -30,16 +62,16 @@ let Signup = (props) => {
                     <div className="row mt-0 mr-n4 ml-n4">
                         <div className="col-12">
                             <div className="container">
-                                <div className="row mt-n2 mb-2 ml-n4 mr-n4">
+                                {/* <div className="row mt-n2 mb-2 ml-n4 mr-n4">
                                     <div className="col-12 ">
                                         <div className="btn-group btn-block btn-group-lg mx-auto " role="group" aria-label="Basic example">
                                             <button onClick={() => routChange("/")} type="button" className="btn btn-outline-primary border-top-0 border-right-0 border-left-0  border-bottom">Sign In</button>
                                             <button onClick={() => routChange("/authe/signup")} type="button" className="btn btn-outline-primary border-top-0 border-right-0 border-left-0  border-bottom">Sign Up</button>
                                         </div>
                                     </div>
-                                </div>
-                                <form onSubmit={handleSubmit}>
-                                    <div className="row mx-2 justify-content-center font-weight-bold h3">Sign Up</div>
+                                </div> */}
+                                <div className="row justify-content-center font-weight-bold h3 "><div className="col-12 mx-0  border-top-0 border-right-0 border-left-0  border-bottom text-center pb-2">Sign Up</div></div>
+                                <form onSubmit={handleSubmit} encType="multipart/form-data" >
                                     <div className="row mx-2">
                                         {
                                             formFieldName.map((item, itemIndex) => {
@@ -52,11 +84,31 @@ let Signup = (props) => {
                                                 />
                                             })
                                         }
+                                        <div className="form-group col-md-12">
+                                            <div className="custom-file">
+                                                <input
+                                                    // multiple 
+                                                    onChange={fileSelectHandler} name="image" type="file" className="custom-file-input" id="image" />
+                                                <label className="custom-file-label" htmlFor="image">
+                                                    {formValue.image.name ? formValue.image.name : "Choose Image"}
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="row mx-2 justify-content-center font-weight-bold">
-                                        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                                        <button type="submit" className="btn btn-primary btn-block mx-3">Sign Up</button>
                                     </div>
                                 </form>
+                                <div className="row m-2 ">
+                                    {/* <div className="col-12 col-md-6 mr-auto float-left">
+                                        <div>
+                                            <button onClick={() => routChange("/authe/signup")} className="btn btn-light btn-block "><span className="">Forgotten account?</span></button>
+                                        </div>
+                                    </div> */}
+                                    <div className="col-12 col-md-6 ml-auto float-right">
+                                        <button onClick={() => routChange("/")} className="btn new_bnt_1 btn-block"><span className="">Sign In</span></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

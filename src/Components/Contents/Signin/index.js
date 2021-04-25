@@ -39,16 +39,8 @@ let Signin = (props) => {
                     <div className="row mt-0 mr-n4 ml-n4">
                         <div className="col-12">
                             <div className="container">
-                                <div className="row mt-n2 mb-2 ml-n4 mr-n4">
-                                    <div className="col-12 ">
-                                        <div className="btn-group btn-block btn-group-lg mx-auto " role="group" aria-label="Basic example">
-                                            <button onClick={() => routChange("/")} type="button" className="btn btn-outline-primary border-top-0 border-right-0 border-left-0  border-bottom">Sign In</button>
-                                            <button onClick={() => routChange("/authe/signup")} type="button" className="btn btn-outline-primary border-top-0 border-right-0 border-left-0  border-bottom">Sign Up</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div className="row justify-content-center font-weight-bold h3 "><div className="col-12 mx-0  border-top-0 border-right-0 border-left-0  border-bottom text-center pb-2"> Sign In</div></div>
                                 <form onSubmit={handleSubmit}>
-                                    <div className="row mx-2 justify-content-center font-weight-bold h3">Sign In</div>
                                     <div className="row mx-2">
                                         {
                                             formFieldName.map((item, itemIndex) => {
@@ -62,14 +54,19 @@ let Signin = (props) => {
                                             })
                                         }
                                     </div>
-                                    <div className="row mx-2 ">
-                                        <div className="col-auto mr-auto float-left">
+                                    <div className="row mx-2 justify-content-center">
+                                        <div className="col-12 float-right">
+                                            <button type="submit" className="btn btn-primary btn-block font-weight-bold ">Sign In</button>
+                                        </div>
+                                    </div>
+                                    <div className="row m-2 ">
+                                        <div className="col-12 col-md-6 mr-auto float-left">
                                             <div>
-                                                <button onClick={() => routChange("/authe/signup")} className="btn btn-light "><span className="">Forgot Password</span></button>
+                                                <button onClick={() => routChange("/authe/signup")} className="btn btn-light btn-block "><span className="">Forgotten account?</span></button>
                                             </div>
                                         </div>
-                                        <div className="col-auto float-right">
-                                            <button type="submit" className="btn btn-primary btn-lg ">Submit</button>
+                                        <div className="col-12 col-md-6 float-right">
+                                        <button onClick={() => routChange("/authe/signup")} className="btn new_bnt_1 btn-block"><span className="">Sign Up</span></button>
                                         </div>
                                     </div>
                                 </form>

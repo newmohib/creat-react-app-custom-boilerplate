@@ -4,7 +4,7 @@ let initialState = { email: "", password: "" };
 
 const reducer = (state = initialState, action) => {
     const newState = { ...state };
-    console.log("reducer Signin Information", action.payload);
+    //console.log("reducer Signin Information", action.payload);
 
     switch (action.type) {
         case SIGNIN_INPUT:

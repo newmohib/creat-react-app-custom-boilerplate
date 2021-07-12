@@ -1,11 +1,10 @@
 import { SIGNUP_INPUT, SIGNUP_SUBMIT } from './constant';
 
-let initialState = { email: "", password: "" ,confPassword:"",image:{}};
+let initialState = { firstName:"", lastName:"", username:"", email: "", password: "", confPassword: ""};
 
 const reducer = (state = initialState, action) => {
     
-    console.log("reducer Signup Information", action.payload);
-
+    //console.log("reducer Signup Information", action.payload);
     switch (action.type) {
         case SIGNUP_INPUT:
             return {...state, ...action.payload};

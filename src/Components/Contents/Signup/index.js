@@ -7,9 +7,15 @@ import { formFieldName } from './signupForm';
 import { handleSignupChange, handleSignupSubmit } from './action';
 import { handleChangeInput } from './service';
 import { httpSimpleRequest } from '../../../Utils/httpClient';
+import { notifications } from '../Notifications';
 
 let Signup = (props) => {
-    let errorValue = { email: "", password: "", confPassword: "" };
+    let historyObj = useHistory();
+    let routChange = (value) => {
+        historyObj.push(value)
+    };
+
+    let errorValue = { firstName: "", lastName: "", username: "", email: "", password: "", confPassword: "" };
     let formValue = props.signUpInfo;
     let handleChange = ({ currentTarget: input }) => {
         formValue = handleChangeInput(input, props);
@@ -24,44 +30,64 @@ let Signup = (props) => {
     }
     const handleSubmit = (element) => {
         element.preventDefault();
-        let signinSubmitArr = element.target;
-        // handleSubmitSignin(signinSubmitArr, props);
-        console.log("signinSubmitArr", element.target.value);
-        let fd = new FormData();
 
+        // for all form data by submit
+        // let signinSubmitArr = element.target;
+        // console.log("signinSubmitArr", element.target.value);
+
+        let fd = new FormData();
         let keys = Object.keys(formValue);
+
         keys.map((item, index) => {
             fd.append(item, formValue[item]);
-        })
+        });
+
+        let notifyOptions={
+            title: "Error",
+            message: "Incorrect Input & Please Try Again.",
+            type: "danger"
+        };
         // 'content-type':'application/json'
+        
+        // axios({
+        //     method: "post",
+        //     url: "http://localhost:4000/employees/img-upload",
+        //     data: fd,
+        //     onUploadProgress: uploadProgress,
+        //     headers: {
+        //         'content-type': 'multipart/form-data'
+        //     }
+        // })
+
         axios({
             method: "post",
-            url: "http://localhost:4000/users",
-            data: fd,
+            url: "http://localhost:4000/signup",
+            data: formValue,
             onUploadProgress: uploadProgress,
             headers: {
-                'content-type': 'multipart/form-data'
+                'content-type':'application/json'
             }
-
         })
-            .then(response => {
-                console.log("response", response.data);
-            }).catch(error => {
-                console.log("error", error);
-            })
+        .then(response => {
+            console.log("response", response.data);
+            if (response?.data?.userId) {
+                routChange("signin");
+            }else{
+                notifications(notifyOptions);  
+            }
+        }).catch(error => {
+            console.log("error", error);
+            notifications(notifyOptions); 
+        });
     }
 
-    let historyObj = useHistory();
-    let routChange = (value) => {
-        historyObj.push(value)
-    }
     return (
         <div className="row justify-content-center mt-5">
-            <div className="col-12 col-md-8 col-xl-6 col-lg-6 col-sm-10">
-                <div className="container custom_form mt-5">
+            <div className="col-12 col-md-10 col-xl-6 col-lg-6 col-sm-10">
+                <div className="container-fluid custom_form mt-5">
                     <div className="row mt-0 mr-n4 ml-n4">
                         <div className="col-12">
-                            <div className="container">
+                            <div className="container-fluid">
                                 {/* <div className="row mt-n2 mb-2 ml-n4 mr-n4">
                                     <div className="col-12 ">
                                         <div className="btn-group btn-block btn-group-lg mx-auto " role="group" aria-label="Basic example">
@@ -84,7 +110,7 @@ let Signup = (props) => {
                                                 />
                                             })
                                         }
-                                        <div className="form-group col-md-12">
+                                        {/* <div className="form-group col-md-12">
                                             <div className="custom-file">
                                                 <input
                                                     // multiple 
@@ -93,23 +119,18 @@ let Signup = (props) => {
                                                     {formValue.image.name ? formValue.image.name : "Choose Image"}
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
-                                    <div className="row mx-2 justify-content-center font-weight-bold">
-                                        <button type="submit" className="btn btn-primary btn-block mx-3">Sign Up</button>
+                                    <div className="row mx-2 mb-3 justify-content-center font-weight-bold">
+                                        <button type="submit" className="btn  new_bnt_1 btn-block mx-3">Sign Up</button>
                                     </div>
                                 </form>
-                                <div className="row m-2 ">
-                                    {/* <div className="col-12 col-md-6 mr-auto float-left">
-                                        <div>
-                                            <button onClick={() => routChange("/authe/signup")} className="btn btn-light btn-block "><span className="">Forgotten account?</span></button>
-                                        </div>
-                                    </div> */}
-                                    <div className="col-12 col-md-6 ml-auto float-right">
-                                        <button onClick={() => routChange("/")} className="btn new_bnt_1 btn-block"><span className="">Sign In</span></button>
+                                {/* <div className="row m-2 ">
+                                    <div className="col-12 col-md-6 ml-auto float-right mt-2">
+                                        <button onClick={() => routChange("/")} className="btn btn-secondary btn-block"><span className="">Sign In</span></button>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

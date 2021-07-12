@@ -1,3 +1,6 @@
+API patht : data\react-node\node-mysql\app_1
+UI Ptha : data/REACT/apps/creat-react-app-custom-admin-boilerplate
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

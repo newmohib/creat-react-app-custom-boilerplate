@@ -1,7 +1,37 @@
 let formFieldName =
     [
         {
-            divClass: "form-group col-md-12",
+            divClass: "form-group col-12 col-md-6",
+            labelClass: "",
+            labelFor: "firstName",
+            labelText: "First Name",
+            placeholder: "",
+            inputClass: "form-control",
+            inputId: "firstName",
+            inputType: "text",
+            inputName:"firstName",
+            errorName:"firstName",
+            errorClass:"",
+            valueName:"firstName"
+        },
+
+        {
+            divClass: "form-group col-12 col-md-6",
+            labelClass: "",
+            labelFor: "lastName",
+            labelText: "Last Name",
+            placeholder: "",
+            inputClass: "form-control",
+            inputId: "lastName",
+            inputType: "text",
+            inputName:"lastName",
+            errorName:"lastName",
+            errorClass:"",
+            valueName:"lastName"
+        },
+
+        {
+            divClass: "form-group col-12 col-md-6",
             labelClass: "",
             labelFor: "email",
             labelText: "Email",
@@ -14,8 +44,25 @@ let formFieldName =
             errorClass:"",
             valueName:"email"
         },
+
         {
-            divClass: "form-group col-md-12",
+            divClass: "form-group col-12 col-md-6",
+            labelClass: "",
+            labelFor: "username",
+            labelText: "Username",
+            placeholder: "",
+            inputClass: "form-control",
+            inputId: "username",
+            inputType: "text",
+            inputName:"username",
+            errorName:"username",
+            errorClass:"",
+            valueName:"username"
+        },
+
+        
+        {
+            divClass: "form-group col-12 col-md-6",
             labelClass: "",
             labelFor: "password",
             labelText: "Password",
@@ -29,7 +76,7 @@ let formFieldName =
             valueName:"password"
         },
         {
-            divClass: "form-group col-md-12",
+            divClass: "form-group col-12 col-md-6",
             labelClass: "",
             labelFor: "confPassword",
             labelText: "Confirm Password",
